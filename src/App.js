@@ -1,7 +1,8 @@
+import Panel from './components/Panel';
 
 function App() {
   return (
-    <div className="App">app</div>
+    <Panel />
   );
 }
 
