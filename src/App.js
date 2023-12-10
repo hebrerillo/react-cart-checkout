@@ -1,8 +1,8 @@
-import Panel from './components/Panel';
+import PanelContainer from './components/PanelContainer';
 
 function App() {
   return (
-    <Panel />
+    <PanelContainer />
   );
 }
 

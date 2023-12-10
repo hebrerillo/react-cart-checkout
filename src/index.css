@@ -27,6 +27,7 @@ code {
 .panel-tab {
     padding: 10px 25px;
     border-right: 1px solid black;
+    border-bottom: 1px solid black;
     flex-grow: 1;
     text-align: center;
     color:inherit;

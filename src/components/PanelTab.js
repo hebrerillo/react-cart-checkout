@@ -1,8 +1,10 @@
-function PanelTab({to, children}) {
+import useNavigation from '../hooks/use-navigation';
 
+function PanelTab({to, children}) {
+    const { navigate } = useNavigation();
     const handleClick = (event) => {
         event.preventDefault();
-        window.history.pushState({}, '', to);
+        navigate(to);
     };
 
     return (
