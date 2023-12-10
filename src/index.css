@@ -16,6 +16,7 @@ code {
 .panel-container {
     max-width: 1000px;
     margin: 0 auto;
+    margin-top: 90px;
     border: 1px solid black;
     font-size: 18px;
 }
@@ -36,4 +37,9 @@ code {
 
 .panel-tab:last-child {
     border-right: none;
+}
+
+.posts-panel-container {
+    max-height: 400px;
+    overflow-y: scroll;
 }

@@ -8,7 +8,7 @@ function PanelContainer() {
     const {currentPath} = useNavigation();
     let finalPanel = null;
     if (currentPath === '/posts') {
-        finalPanel = <Posts />;
+        finalPanel = <div className="posts-panel-container"><Posts /></div>;
     } else if (currentPath === '/config') {
         finalPanel = <Config />;
     } else if (currentPath === '/') {

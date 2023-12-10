@@ -1,7 +1,7 @@
 import PanelContainer from './components/PanelContainer';
 
 function App() {
-  return (
+    return (
     <PanelContainer />
   );
 }
