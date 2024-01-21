@@ -6,6 +6,7 @@ import Images from '../panels/Images';
 
 function PanelContainer() {
     const {currentPath} = useNavigation();
+
     let finalPanel = null;
     if (currentPath === '/posts') {
         finalPanel = <div className="posts-panel-container"><Posts /></div>;
