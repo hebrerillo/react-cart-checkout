@@ -7,15 +7,6 @@ import Images from '../panels/Images';
 function PanelContainer() {
     const {currentPath} = useNavigation();
 
-    let finalPanel = null;
-    if (currentPath === '/posts') {
-        finalPanel = <div className="posts-panel-container"><Posts /></div>;
-    } else if (currentPath === '/config') {
-        finalPanel = <Config />;
-    } else if (currentPath === '/') {
-        finalPanel = <Images />;
-    }
-
     return (
             <div className="panel-container">
                 <div className="panel-tabs">
@@ -24,7 +15,9 @@ function PanelContainer() {
                     <PanelTab to={'/config'}>Config</PanelTab>
                 </div>
                 <div className="panel-contents">
-                    {finalPanel}
+                    <div className={"posts-panel-container " + (currentPath !== '/posts' ? 'hide' : '')}><Posts /></div>
+                    <div className={(currentPath !== '/config' ? 'hide' : '')}><Config /></div>
+                    <div className={(currentPath !== '/' ? 'hide' : '')}><Images /></div>
                 </div>
             </div>
             );

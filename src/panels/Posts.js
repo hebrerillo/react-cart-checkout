@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef} from 'react';
+import {useState, useEffect, useRef, useCallback} from 'react';
 import Post from '../components/Post';
 
 function Posts() {
@@ -14,20 +14,21 @@ function Posts() {
 
     function intersectionCallback(entries) {
         if (entries[0].target === lastPost.current && entries[0].isIntersecting) {
-            fetchData();
+            stableFetchData();
         }
     }
 
-    async function fetchData() {
+    const stableFetchData = useCallback(async () => {
         const result = await fetch('http://localhost/posts.php?start=' + parentPosts.current.childNodes.length);
         const remotePosts = await result.json();
-        const newPosts = posts.concat(remotePosts);
-        setPosts(newPosts);
-    }
+        setPosts((currentPosts) => {
+            return currentPosts.concat(remotePosts);
+        });
+    }, []);
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        stableFetchData();
+    }, [stableFetchData]);
 
     useEffect(() => {
         if (lastPost.current) {
