@@ -1,8 +1,12 @@
 import PanelContainer from './components/PanelContainer';
+import Loader from './components/Loader';
 
 function App() {
     return (
-    <PanelContainer />
+    <div>
+        <PanelContainer />
+        <Loader />
+    </div>
   );
 }
 
