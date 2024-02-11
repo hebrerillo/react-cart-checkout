@@ -1,8 +1,7 @@
-import {useState, useEffect, useRef, useCallback} from 'react';
+import {useEffect, useRef, useCallback} from 'react';
 import Post from '../components/Post';
 
-function Posts({showLoaderCB}) {
-    const [posts, setPosts] = useState([]);
+function Posts({showLoaderCB, posts, postsCB}) {
     const lastPost = useRef();
     const parentPosts = useRef();
     const observer = new IntersectionObserver(intersectionCallback, {
@@ -13,6 +12,7 @@ function Posts({showLoaderCB}) {
 
     function intersectionCallback(entries) {
         if (entries[0].target === lastPost.current && entries[0].isIntersecting) {
+            console.log("Fetching posts from intersection callback");
             stableFetchData();
         }
     }
@@ -21,13 +21,12 @@ function Posts({showLoaderCB}) {
         showLoaderCB(true);
         const result = await fetch('http://localhost/posts.php?start=' + parentPosts.current.childNodes.length);
         const remotePosts = await result.json();
-        setPosts((currentPosts) => {
-            return currentPosts.concat(remotePosts);
-        });
+        postsCB(remotePosts);
         showLoaderCB(false);
-    }, [showLoaderCB]);
+    }, [showLoaderCB, postsCB]);
 
     useEffect(() => {
+        console.log("Fetching posts from useEffect");
         stableFetchData();
     }, [stableFetchData]);
 

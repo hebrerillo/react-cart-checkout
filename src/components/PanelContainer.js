@@ -3,20 +3,27 @@ import useNavigation from '../hooks/use-navigation';
 import Posts from '../panels/Posts';
 import Config from '../panels/Config';
 import Images from '../panels/Images';
-import {useRef} from 'react';
+import {useRef, useState, useCallback} from 'react';
 
 function PanelContainer() {
+    const [posts, setPosts] = useState([]);
     const {currentPath} = useNavigation();
     const loaderRef = useRef();
 
-    const showLoader = (show) => {
+    const showLoader = useCallback((show) => {
         if (show) {
             console.log(loaderRef);
             loaderRef.current.classList.remove('hide');
         } else {
             loaderRef.current.classList.add('hide');
         }
-    };
+    }, []);
+
+    const setPostsCB = useCallback((remotePosts) => {
+        setPosts((currentPosts) => {
+            return currentPosts.concat(remotePosts);
+        });
+    }, []);
 
     return (
             <div className="panel-container">
@@ -26,7 +33,7 @@ function PanelContainer() {
                     <PanelTab to={'/config'}>Config</PanelTab>
                 </div>
                 <div className="panel-contents">
-                    <div className={"posts-panel-container " + (currentPath !== '/posts' ? 'hide' : '')}><Posts showLoaderCB={showLoader} /></div>
+                    <div className={"posts-panel-container " + (currentPath !== '/posts' ? 'hide' : '')}><Posts showLoaderCB={showLoader} posts={posts} postsCB={setPostsCB} /></div>
                     <div className={(currentPath !== '/config' ? 'hide' : '')}><Config /></div>
                     <div className={(currentPath !== '/' ? 'hide' : '')}><Images /></div>
                 </div>
