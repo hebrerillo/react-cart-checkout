@@ -1,8 +1,7 @@
 import {useState, useEffect, useRef, useCallback} from 'react';
 import Post from '../components/Post';
 
-function Posts() {
-
+function Posts({showLoaderCB}) {
     const [posts, setPosts] = useState([]);
     const lastPost = useRef();
     const parentPosts = useRef();
@@ -19,12 +18,14 @@ function Posts() {
     }
 
     const stableFetchData = useCallback(async () => {
+        showLoaderCB(true);
         const result = await fetch('http://localhost/posts.php?start=' + parentPosts.current.childNodes.length);
         const remotePosts = await result.json();
         setPosts((currentPosts) => {
             return currentPosts.concat(remotePosts);
         });
-    }, []);
+        showLoaderCB(false);
+    }, [showLoaderCB]);
 
     useEffect(() => {
         stableFetchData();
