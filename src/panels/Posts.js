@@ -1,5 +1,6 @@
 import {useEffect, useRef, useCallback} from 'react';
 import Post from '../components/Post';
+import getPosts from '../utils/getPosts';
 
 function Posts({showLoaderCB, posts, postsCB}) {
     const lastPost = useRef();
@@ -12,21 +13,18 @@ function Posts({showLoaderCB, posts, postsCB}) {
 
     function intersectionCallback(entries) {
         if (entries[0].target === lastPost.current && entries[0].isIntersecting) {
-            console.log("Fetching posts from intersection callback");
             stableFetchData();
         }
     }
 
     const stableFetchData = useCallback(async () => {
         showLoaderCB(true);
-        const result = await fetch('http://localhost/posts.php?start=' + parentPosts.current.childNodes.length);
-        const remotePosts = await result.json();
+        const remotePosts = await getPosts(parentPosts.current.childNodes.length, true);
         postsCB(remotePosts);
         showLoaderCB(false);
     }, [showLoaderCB, postsCB]);
 
     useEffect(() => {
-        console.log("Fetching posts from useEffect");
         stableFetchData();
     }, [stableFetchData]);
 

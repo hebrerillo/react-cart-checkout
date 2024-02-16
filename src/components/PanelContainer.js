@@ -12,7 +12,6 @@ function PanelContainer() {
 
     const showLoader = useCallback((show) => {
         if (show) {
-            console.log(loaderRef);
             loaderRef.current.classList.remove('hide');
         } else {
             loaderRef.current.classList.add('hide');
