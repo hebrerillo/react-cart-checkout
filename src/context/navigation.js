@@ -3,7 +3,14 @@ import { createContext, useState, useEffect } from 'react';
 const NavigationContext = createContext();
 
 function NavigationProvider({ children }) {
+    
+  const mapPathTitles = new Map([
+      ['/', "Images"],
+      ['/posts', "Posts"],
+      ['/config', "Configuration"]
+  ]);
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const [currentTitle, setCurrentTitle] = useState(mapPathTitles.get(currentPath));
 
   useEffect(() => {
     const handler = () => {
@@ -19,10 +26,11 @@ function NavigationProvider({ children }) {
   const navigate = (to) => {
     window.history.pushState({}, '', to);
     setCurrentPath(to);
+    setCurrentTitle(mapPathTitles.get(to));
   };
 
   return (
-    <NavigationContext.Provider value={{ currentPath, navigate }}>
+    <NavigationContext.Provider value={{ currentPath, navigate, currentTitle }}>
       {children}
     </NavigationContext.Provider>
   );

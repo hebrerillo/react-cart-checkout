@@ -13,10 +13,15 @@ code {
     monospace;
 }
 
+.main-title {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
 .panel-container {
     max-width: 1000px;
     margin: 0 auto;
-    margin-top: 90px;
     border: 1px solid black;
     font-size: 18px;
 }
