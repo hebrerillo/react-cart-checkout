@@ -6,7 +6,7 @@ function App() {
     const {currentTitle} = useNavigation();
     return (
     <div>
-        <h1 class="main-title">{currentTitle}</h1>
+        <h1 className="main-title">{currentTitle}</h1>
         <PanelContainer />
     </div>
   );

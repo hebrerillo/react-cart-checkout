@@ -25,14 +25,6 @@ function PanelContainer() {
         });
     }, []);
 
-    let finalComp = null;
-    if (currentPath === '/posts')
-        finalComp = <Posts showLoaderCB={showLoader} posts={posts} postsCB={setPostsCB} />;
-    else if (currentPath === '/')
-        finalComp = <Images />;
-    else
-        finalComp = <Config />;
-
     return (
             <div className="panel-container">
                 <div className="panel-tabs">
@@ -41,7 +33,15 @@ function PanelContainer() {
                     <PanelTab to={'/config'}>Config</PanelTab>
                 </div>
                 <div className="panel-contents">
-                    <div className="posts-panel-container">{finalComp}</div>
+                    <div className={"panel-contents-wrapper " + (currentPath === '/' ? '' : 'hide')}>
+                        <Images />
+                    </div>
+                    <div className={"panel-contents-wrapper " + (currentPath === '/posts' ? '' : 'hide')}>
+                        <Posts showLoaderCB={showLoader} posts={posts} postsCB={setPostsCB}/>
+                    </div>
+                    <div className={"panel-contents-wrapper " + (currentPath === '/config' ? '' : 'hide')}>
+                        <Config />
+                    </div>
                 </div>
                 <div className={"loader hide"} ref={loaderRef}>
                     <img src="loading.svg" alt="loading"/>

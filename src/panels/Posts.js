@@ -1,8 +1,10 @@
 import {useEffect, useRef, useCallback} from 'react';
 import Post from '../components/Post';
 import getPosts from '../utils/getPosts';
+import useNavigation from '../hooks/use-navigation';
 
 function Posts({showLoaderCB, posts, postsCB}) {
+    const {currentPath} = useNavigation();
     const lastPost = useRef();
     const parentPosts = useRef();
     const observer = new IntersectionObserver(intersectionCallback, {
@@ -25,12 +27,14 @@ function Posts({showLoaderCB, posts, postsCB}) {
     }, [showLoaderCB, postsCB]);
 
     useEffect(() => {
-        stableFetchData();
-    }, [stableFetchData]);
-
-    useEffect(() => {
         if (lastPost.current) {
             observer.observe(lastPost.current);
+            return () => {
+                observer.disconnect();
+            };
+        }
+        else if (posts.length === 0 && currentPath === '/posts') {
+            stableFetchData();
         }
     });
 

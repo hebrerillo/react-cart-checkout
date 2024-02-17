@@ -44,7 +44,7 @@ code {
     border-right: none;
 }
 
-.posts-panel-container {
+.panel-contents-wrapper {
     max-height: 400px;
     overflow-y: scroll;
 }
