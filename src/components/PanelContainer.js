@@ -13,7 +13,8 @@ function PanelContainer() {
     const showLoader = useCallback((show) => {
         if (show) {
             loaderRef.current.classList.remove('hide');
-        } else {
+        }
+        else {
             loaderRef.current.classList.add('hide');
         }
     }, []);
@@ -29,7 +30,8 @@ function PanelContainer() {
         finalComp = <Posts showLoaderCB={showLoader} posts={posts} postsCB={setPostsCB} />;
     else if (currentPath === '/')
         finalComp = <Images />;
-    else finalComp = <Config />;
+    else
+        finalComp = <Config />;
 
     return (
             <div className="panel-container">
@@ -39,13 +41,13 @@ function PanelContainer() {
                     <PanelTab to={'/config'}>Config</PanelTab>
                 </div>
                 <div className="panel-contents">
-                <div className="posts-panel-container">{finalComp}</div>
+                    <div className="posts-panel-container">{finalComp}</div>
                 </div>
                 <div className={"loader hide"} ref={loaderRef}>
                     <img src="loading.svg" alt="loading"/>
                 </div>
             </div>
-            
+
             );
 }
 
