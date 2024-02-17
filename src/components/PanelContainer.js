@@ -3,10 +3,11 @@ import useNavigation from '../hooks/use-navigation';
 import Posts from '../panels/Posts';
 import Config from '../panels/Config';
 import Images from '../panels/Images';
-import {useRef, useState, useCallback} from 'react';
+import {useRef, useState, useCallback, useEffect} from 'react';
 
 function PanelContainer() {
     const [posts, setPosts] = useState([]);
+    const [postsIntervalId, setPostsIntervalId] = useState(-1);
     const {currentPath} = useNavigation();
     const loaderRef = useRef();
 
@@ -24,6 +25,24 @@ function PanelContainer() {
             return currentPosts.concat(remotePosts);
         });
     }, []);
+
+    useEffect(() => {
+        if (currentPath === '/posts' && postsIntervalId !== -1) {
+            window.clearTimeout(postsIntervalId);
+            setPostsIntervalId(-1);
+            return;
+        }
+
+        if (postsIntervalId === -1 && currentPath !== '/posts' && posts.length > 15) {
+            const intervalId = window.setTimeout(() => {
+                setPosts(posts.slice(0, 14));
+                setPostsIntervalId(-1);
+            }, 4000);
+            setPostsIntervalId(intervalId);
+            return;
+        }
+    });
+
 
     return (
             <div className="panel-container">
