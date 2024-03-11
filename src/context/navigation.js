@@ -2,38 +2,43 @@ import { createContext, useState, useEffect } from 'react';
 
 const NavigationContext = createContext();
 
-function NavigationProvider({ children }) {
-    
-  const mapPathTitles = new Map([
-      ['/', "Images"],
-      ['/posts', "Posts"],
-      ['/config', "Configuration"]
-  ]);
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
-  const [currentTitle, setCurrentTitle] = useState(mapPathTitles.get(currentPath));
+function NavigationProvider(  { children }) {
 
-  useEffect(() => {
-    const handler = () => {
-      setCurrentPath(window.location.pathname);
+    const mapPathTitles = new Map([
+        ['/', "Images"],
+        ['/posts', "Posts"],
+        ['/config', "Configuration"]
+    ]);
+    const [currentPath, setCurrentPath] = useState(window.location.pathname);
+    const [currentTitle, setCurrentTitle] = useState(mapPathTitles.get(currentPath));
+
+    useEffect(() => {
+        const handler = () => {
+            setCurrentPath(window.location.pathname);
+        };
+        window.addEventListener('popstate', handler);
+
+        return () => {
+            window.removeEventListener('popstate', handler);
+        };
+    }, []);
+
+    const navigate = (to) => {
+        window.history.pushState({}, '', to);
+        setCurrentPath(to);
+        setCurrentTitle(mapPathTitles.get(to));
     };
-    window.addEventListener('popstate', handler);
 
-    return () => {
-      window.removeEventListener('popstate', handler);
-    };
-  }, []);
+    const shared = {currentPath,
+                    navigate,
+                    currentTitle
+                };
 
-  const navigate = (to) => {
-    window.history.pushState({}, '', to);
-    setCurrentPath(to);
-    setCurrentTitle(mapPathTitles.get(to));
-  };
-
-  return (
-    <NavigationContext.Provider value={{ currentPath, navigate, currentTitle }}>
-      {children}
-    </NavigationContext.Provider>
-  );
+    return (
+            <NavigationContext.Provider value={shared}>
+                {children}
+            </NavigationContext.Provider>
+            );
 }
 
 export { NavigationProvider };
