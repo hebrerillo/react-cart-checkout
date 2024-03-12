@@ -12,6 +12,7 @@ function NavigationProvider( { children }) {
     ]);
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
     const [currentTitle, setCurrentTitle] = useState(mapPathTitles.get(currentPath));
+    const [posts, setPosts] = useState([]);
 
     const showLoader = useCallback((show) => {
         if (!loaderRef.current) {
@@ -42,11 +43,19 @@ function NavigationProvider( { children }) {
         setCurrentTitle(mapPathTitles.get(to));
     };
 
+    const setPostsCB = useCallback((remotePosts) => {
+        setPosts((currentPosts) => {
+            return currentPosts.concat(remotePosts);
+        });
+    }, []);
+
     const shared = {currentPath,
         navigate,
         currentTitle,
         loaderRef,
-        showLoader
+        showLoader,
+        posts,
+        setPosts: setPostsCB
     };
 
     return (

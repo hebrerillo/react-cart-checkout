@@ -3,18 +3,11 @@ import useNavigation from '../hooks/use-navigation';
 import Posts from '../panels/Posts';
 import Config from '../panels/Config';
 import Images from '../panels/Images';
-import {useRef, useState, useCallback, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 
 function PanelContainer() {
-    const [posts, setPosts] = useState([]);
     const [postsIntervalId, setPostsIntervalId] = useState(-1);
-    const {currentPath} = useNavigation();
-
-    const setPostsCB = useCallback((remotePosts) => {
-        setPosts((currentPosts) => {
-            return currentPosts.concat(remotePosts);
-        });
-    }, []);
+    const {currentPath, posts, setPosts} = useNavigation();
 
     useEffect(() => {
         if (currentPath === '/posts' && postsIntervalId !== -1) {
@@ -46,7 +39,7 @@ function PanelContainer() {
                         <Images />
                     </div>
                     <div className={"panel-contents-wrapper " + (currentPath === '/posts' ? '' : 'hide')}>
-                        <Posts posts={posts} postsCB={setPostsCB}/>
+                        <Posts />
                     </div>
                     <div className={"panel-contents-wrapper " + (currentPath === '/config' ? '' : 'hide')}>
                         <Config />

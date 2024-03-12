@@ -3,8 +3,8 @@ import Post from '../components/Post';
 import getPosts from '../utils/getPosts';
 import useNavigation from '../hooks/use-navigation';
 
-function Posts({posts, postsCB}) {
-    const {currentPath, showLoader} = useNavigation();
+function Posts() {
+    const {currentPath, showLoader, posts, setPosts} = useNavigation();
     const lastPost = useRef();
     const parentPosts = useRef();
     const observer = new IntersectionObserver(intersectionCallback, {
@@ -22,9 +22,9 @@ function Posts({posts, postsCB}) {
     const stableFetchData = useCallback(async () => {
         showLoader(true);
         const remotePosts = await getPosts(parentPosts.current.childNodes.length, true);
-        postsCB(remotePosts);
+        setPosts(remotePosts);
         showLoader(false);
-    }, [showLoader, postsCB]);
+    }, [showLoader, setPosts]);
 
     useEffect(() => {
         if (lastPost.current) {
