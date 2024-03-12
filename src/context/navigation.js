@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, createRef, useCallback } from 'react';
+import getPosts from '../utils/getPosts';
 
 const NavigationContext = createContext();
 const loaderRef = createRef();
@@ -49,13 +50,19 @@ function NavigationProvider( { children }) {
         });
     }, []);
 
+    const fetchPosts = useCallback(async (length) => {
+        showLoader(true);
+        const remotePosts = await getPosts(length, true);
+        setPostsCB(remotePosts);
+        showLoader(false);
+    }, [showLoader, setPostsCB]);
+
     const shared = {currentPath,
         navigate,
         currentTitle,
         loaderRef,
-        showLoader,
         posts,
-        setPosts: setPostsCB
+        fetchPosts
     };
 
     return (

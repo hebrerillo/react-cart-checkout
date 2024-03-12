@@ -1,10 +1,9 @@
-import {useEffect, useRef, useCallback} from 'react';
+import {useEffect, useRef} from 'react';
 import Post from '../components/Post';
-import getPosts from '../utils/getPosts';
 import useNavigation from '../hooks/use-navigation';
 
 function Posts() {
-    const {currentPath, showLoader, posts, setPosts} = useNavigation();
+    const {currentPath, posts, fetchPosts} = useNavigation();
     const lastPost = useRef();
     const parentPosts = useRef();
     const observer = new IntersectionObserver(intersectionCallback, {
@@ -15,16 +14,9 @@ function Posts() {
 
     function intersectionCallback(entries) {
         if (entries[0].target === lastPost.current && entries[0].isIntersecting) {
-            stableFetchData();
+            fetchPosts(parentPosts.current.childNodes.length);
         }
     }
-
-    const stableFetchData = useCallback(async () => {
-        showLoader(true);
-        const remotePosts = await getPosts(parentPosts.current.childNodes.length, true);
-        setPosts(remotePosts);
-        showLoader(false);
-    }, [showLoader, setPosts]);
 
     useEffect(() => {
         if (lastPost.current) {
@@ -34,7 +26,7 @@ function Posts() {
             };
         }
         else if (posts.length === 0 && currentPath === '/posts') {
-            stableFetchData();
+            fetchPosts(parentPosts.current.childNodes.length);
         }
     });
 
