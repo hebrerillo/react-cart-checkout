@@ -52,7 +52,6 @@ function Posts() {
 
     return (
             <div>
-                <div>Posts</div>
                 <div ref={parentPosts}>{renderedPosts}</div>
             </div>
             );
