@@ -1,8 +1,9 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, createRef, useCallback } from 'react';
 
 const NavigationContext = createContext();
+const loaderRef = createRef();
 
-function NavigationProvider(  { children }) {
+function NavigationProvider( { children }) {
 
     const mapPathTitles = new Map([
         ['/', "Images"],
@@ -11,6 +12,18 @@ function NavigationProvider(  { children }) {
     ]);
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
     const [currentTitle, setCurrentTitle] = useState(mapPathTitles.get(currentPath));
+
+    const showLoader = useCallback((show) => {
+        if (!loaderRef.current) {
+            return;
+        }
+        if (show) {
+            loaderRef.current.classList.remove('hide');
+        }
+        else {
+            loaderRef.current.classList.add('hide');
+        }
+    }, []);
 
     useEffect(() => {
         const handler = () => {
@@ -30,9 +43,11 @@ function NavigationProvider(  { children }) {
     };
 
     const shared = {currentPath,
-                    navigate,
-                    currentTitle
-                };
+        navigate,
+        currentTitle,
+        loaderRef,
+        showLoader
+    };
 
     return (
             <NavigationContext.Provider value={shared}>

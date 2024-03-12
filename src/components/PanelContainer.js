@@ -9,16 +9,6 @@ function PanelContainer() {
     const [posts, setPosts] = useState([]);
     const [postsIntervalId, setPostsIntervalId] = useState(-1);
     const {currentPath} = useNavigation();
-    const loaderRef = useRef();
-
-    const showLoader = useCallback((show) => {
-        if (show) {
-            loaderRef.current.classList.remove('hide');
-        }
-        else {
-            loaderRef.current.classList.add('hide');
-        }
-    }, []);
 
     const setPostsCB = useCallback((remotePosts) => {
         setPosts((currentPosts) => {
@@ -56,14 +46,11 @@ function PanelContainer() {
                         <Images />
                     </div>
                     <div className={"panel-contents-wrapper " + (currentPath === '/posts' ? '' : 'hide')}>
-                        <Posts showLoaderCB={showLoader} posts={posts} postsCB={setPostsCB}/>
+                        <Posts posts={posts} postsCB={setPostsCB}/>
                     </div>
                     <div className={"panel-contents-wrapper " + (currentPath === '/config' ? '' : 'hide')}>
                         <Config />
                     </div>
-                </div>
-                <div className={"loader hide"} ref={loaderRef}>
-                    <img src="loading.svg" alt="loading"/>
                 </div>
             </div>
 
