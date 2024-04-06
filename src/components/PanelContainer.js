@@ -24,7 +24,7 @@ function PanelContainer() {
             setPostsIntervalId(intervalId);
             return;
         }
-    });
+    }, [currentPath, postsIntervalId, posts, setPosts]);
 
 
     return (

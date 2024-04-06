@@ -62,7 +62,8 @@ function NavigationProvider( { children }) {
         currentTitle,
         loaderRef,
         posts,
-        fetchPosts
+        fetchPosts,
+        setPosts: useCallback(posts => setPosts(posts), [])
     };
 
     return (
