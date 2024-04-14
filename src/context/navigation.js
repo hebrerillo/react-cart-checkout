@@ -1,8 +1,11 @@
 import { createContext, useState, useEffect, createRef, useCallback } from 'react';
+import InternalServerError from '../utils/InternalServerError';
 import getPosts from '../utils/getPosts';
 
 const NavigationContext = createContext();
 const loaderRef = createRef();
+const internalServerErrorModalRef = createRef();
+const connectionErrorModalRef = createRef();
 
 function NavigationProvider( { children }) {
 
@@ -15,16 +18,36 @@ function NavigationProvider( { children }) {
     const [currentTitle, setCurrentTitle] = useState(mapPathTitles.get(currentPath));
     const [posts, setPosts] = useState([]);
 
+    const showModalHelper = (show, modal) => {
+        if (show) {
+            modal.classList.remove('hide');
+        }
+        else {
+            modal.classList.add('hide');
+        }
+    };
+
     const showLoader = useCallback((show) => {
         if (!loaderRef.current) {
             return;
         }
-        if (show) {
-            loaderRef.current.classList.remove('hide');
+        showModalHelper(show, loaderRef.current);
+    }, []);
+
+    const showInternalServerErrorModal = useCallback((show) => {
+        if (!internalServerErrorModalRef.current) {
+            console.error("No internal server error modal!!!");
+            return;
         }
-        else {
-            loaderRef.current.classList.add('hide');
+        showModalHelper(show, internalServerErrorModalRef.current);
+    }, []);
+
+    const showConnectionErrorModal = useCallback((show) => {
+        if (!connectionErrorModalRef.current) {
+            console.error("No connection error modal!!!");
+            return;
         }
+        showModalHelper(show, connectionErrorModalRef.current);
     }, []);
 
     useEffect(() => {
@@ -52,15 +75,32 @@ function NavigationProvider( { children }) {
 
     const fetchPosts = useCallback(async (length) => {
         showLoader(true);
-        const remotePosts = await getPosts(length, true);
-        setPostsCB(remotePosts);
-        showLoader(false);
-    }, [showLoader, setPostsCB]);
+        const getPostsOptions = {
+            mock: false
+        };
+        try {
+            const remotePosts = await getPosts(length, getPostsOptions);
+            setPostsCB(remotePosts);
+        } catch(error) {
+            if(error instanceof InternalServerError) {
+                console.log("Internal server error when retrieving posts");
+                showInternalServerErrorModal(true);
+            }
+            else {
+                console.log("Error en conexion", error);
+                showConnectionErrorModal(true);
+            }
+        }finally {
+            showLoader(false);
+        }
+    }, [showLoader, setPostsCB, showInternalServerErrorModal, showConnectionErrorModal]);
 
     const shared = {currentPath,
         navigate,
         currentTitle,
         loaderRef,
+        internalServerErrorModalRef,
+        connectionErrorModalRef,
         posts,
         fetchPosts,
         setPosts: useCallback(posts => setPosts(posts), [])

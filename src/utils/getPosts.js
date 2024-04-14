@@ -1,5 +1,7 @@
-async function getPosts(index, mock = false) {
-    return !mock ? getPostsFetch(index): getPostsMock(index);
+import InternalServerError from './InternalServerError';
+
+async function getPosts(index, options = {}) {
+    return !options.mock ? await getPostsFetch(index): await getPostsMock(index, options);
 }
 
 async function getPostsFetch(index) {
@@ -7,7 +9,7 @@ async function getPostsFetch(index) {
     return result.json();
 }
 
-async function getPostsMock(index) {
+async function getPostsMock(index, options) {
     let data = [];
     for (let i = index; i < index + 10; i++) {
         data.push({
@@ -16,8 +18,18 @@ async function getPostsMock(index) {
         });
     }
 
-    return new Promise((resolve) => {
-        window.setTimeout(() => resolve(data), 2000);
+    return new Promise((resolve, reject) => {
+        window.setTimeout(() => {
+            if (options.forceInternalError) {
+                reject(new InternalServerError());
+                return;
+            }
+            else if(options.forceConnectionError) {
+                reject(new Error());
+                return;
+            }
+            resolve(data);
+        }, 2000);
     });
 }
 
