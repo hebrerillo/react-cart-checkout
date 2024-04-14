@@ -82,7 +82,8 @@ function NavigationProvider( { children }) {
             const remotePosts = await getPosts(length, getPostsOptions);
             setPostsCB(remotePosts);
         } catch(error) {
-            if(error instanceof InternalServerError) {
+            console.log("error", error);
+            if(error instanceof InternalServerError || error instanceof SyntaxError) {
                 console.log("Internal server error when retrieving posts");
                 showInternalServerErrorModal(true);
             }
