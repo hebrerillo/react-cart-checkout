@@ -31,15 +31,7 @@ function Posts() {
     });
 
     const renderedPosts = posts.map((post, index) => {
-        let component = null;
-        if (index === posts.length - 1) {
-            component = <div key={post.id} data-key={post.id} ref={lastPost}><Post post={post} /></div>;
-        }
-        else {
-            component = <div key={post.id} data-key={post.id} ><Post post={post} /></div>;
-        }
-
-        return component;
+        return <div key={post.id} data-key={post.id} ref={(index === posts.length - 1) ? lastPost : null}><Post post={post} /></div>;
     });
 
     return (

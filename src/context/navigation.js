@@ -67,9 +67,13 @@ function NavigationProvider( { children }) {
         setCurrentTitle(mapPathTitles.get(to));
     };
 
+    const checkForDuplicatePosts = (currentPosts, remotePosts) => {
+      return !!(currentPosts.find((item) => item.id === remotePosts[0].id));
+    };
+
     const setPostsCB = useCallback((remotePosts) => {
         setPosts((currentPosts) => {
-            return currentPosts.concat(remotePosts);
+          return !checkForDuplicatePosts(currentPosts, remotePosts) ? currentPosts.concat(remotePosts) : currentPosts;
         });
     }, []);
 
