@@ -4,7 +4,7 @@ import Main from "./layout/main";
 
 const App: React.FC = () => {
   return (
-    <div>
+    <div className="main-container">
       <Header />
       <Main />
     </div>
