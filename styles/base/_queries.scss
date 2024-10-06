@@ -1,0 +1,35 @@
+$small: 375px;
+$medium: 720px;
+$large: 1063px;
+$xlarge: 1440px;
+$xxlarge: 1920px;
+
+@mixin small-up {
+  @media (min-width: $small) {
+    @content;
+  }
+}
+
+@mixin medium-up {
+  @media (min-width: $medium) {
+    @content;
+  }
+}
+
+@mixin large-up {
+  @media (min-width: $large) {
+    @content;
+  }
+}
+
+@mixin xlarge-up {
+  @media (min-width: $xlarge) {
+    @content;
+  }
+}
+
+@mixin xxlarge-up {
+  @media (min-width: $xxlarge) {
+    @content;
+  }
+}
