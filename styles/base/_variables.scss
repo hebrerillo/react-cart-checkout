@@ -1,0 +1,11 @@
+$black: #000;
+$white: #fff;
+$disabled-grey: #939393;
+$submit-hover: #222;
+
+:root {
+  --color-black: #{$black};
+  --color-white: #{$white};
+  --color-disabled-grey: #{$disabled-grey};
+  --color-submit-hover: #{$submit-hover};
+}
