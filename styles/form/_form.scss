@@ -1,3 +1,25 @@
+.form-address {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+  font-size: 1.4rem;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  row-gap: .8rem;
+}
+
+input[type="text"], input[type="email"] {
+  padding: .5rem .3rem;
+  border: 1px solid var(--color-soft-grey);
+  &:focus {
+    outline: none;
+    border: 1px solid var(--color-black);
+  }
+}
+
 button[type="submit"] {
   background-color: var(--color-black);
   color: var(--color-white);;

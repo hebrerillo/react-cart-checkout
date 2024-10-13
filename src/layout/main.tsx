@@ -3,7 +3,7 @@ import Data from "../steps/data";
 
 function Main() {
   return (
-    <main>
+    <main className="site-horizontal-padding">
       <Data />
     </main>
   );
