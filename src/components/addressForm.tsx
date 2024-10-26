@@ -1,13 +1,15 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 function AddressForm() {
   const formRef = useRef(null);
+  const MANDATORY_FIELD_ERROR_MESSAGE = "Mandatory field";
+  const INVALID_FIELD_ERROR_MESSAGE = "Invalid field";
+  const [isValidated, setIsValidated] = useState(false);
 
   function handleClick(event: React.MouseEvent): void {
     event.preventDefault();
-    console.log("clicking and preventing default", event, formRef);
     const formElement = formRef.current! as HTMLFormElement;
-    formElement.classList.add("was-validated");
+    setIsValidated(true);
     if (formElement.checkValidity()) {
       //TODO send form
       return;
@@ -24,10 +26,11 @@ function AddressForm() {
   }
 
   return (
-    <form className="form-address" ref={formRef}>
+    <form className={`form-address ${isValidated ? 'is-validated' : ''}`} ref={formRef}>
       <div className="form-row">
         <label>First name:</label>
-        <input type="text" name="firstName" required />
+        <input className="form-control" type="text" name="firstName" required />
+        <p className="invalid-feedback">{MANDATORY_FIELD_ERROR_MESSAGE}</p>
       </div>
       <div className="form-row">
         <label>Last name:</label>
@@ -35,31 +38,32 @@ function AddressForm() {
       </div>
       <div className="form-row">
         <label>Email:</label>
-        <input
+        <input className="form-control"
           type="email"
           name="email"
           pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
           required
         />
+        <p className="invalid-feedback">{INVALID_FIELD_ERROR_MESSAGE}</p>
       </div>
       <div className="form-row">
         <label>Phone number:</label>
-        <input type="text" name="phone" required />
+        <input className="form-control" type="text" name="phone" required />
       </div>
       <div className="form-row">
         <label>Country:</label>
-        <input type="text" name="country" required />
+        <input className="form-control" type="text" name="country" required />
       </div>
       <div className="form-row">
         <label>City:</label>
-        <input type="text" name="city" required />
+        <input className="form-control" type="text" name="city" required />
       </div>
       <div className="form-row">
         <label>Zip:</label>
-        <input type="text" name="zip" required />
+        <input className="form-control" type="text" name="zip" required />
       </div>
       <button type="submit" onClick={handleClick}>
-        Enviar
+        Send
       </button>
     </form>
   );

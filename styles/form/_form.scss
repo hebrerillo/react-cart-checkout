@@ -5,6 +5,15 @@
   font-size: 1.4rem;
 }
 
+.invalid-feedback {
+  color: var(--color-invalid-input);
+  display: none;
+
+  .form-address.is-validated .form-control:invalid ~ & {
+    display: block;
+  }
+}
+
 .form-row {
   display: flex;
   flex-direction: column;

@@ -3,6 +3,7 @@ $white: #fff;
 $disabled-grey: #939393;
 $submit-hover: #222;
 $soft-grey: #a6a6a6;
+$invalid-input: #cc0000;
 
 :root {
   --color-black: #{$black};
@@ -10,4 +11,5 @@ $soft-grey: #a6a6a6;
   --color-disabled-grey: #{$disabled-grey};
   --color-submit-hover: #{$submit-hover};
   --color-soft-grey: #{$soft-grey};
+  --color-invalid-input: #{$invalid-input};
 }
