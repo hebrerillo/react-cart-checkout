@@ -3,7 +3,7 @@ function unfold(collapsableBlock: HTMLElement, enableTransition = true): void {
     collapsableBlock.addEventListener("transitionend", transitionEnd);
     collapsableBlock.style.maxHeight = `${collapsableBlock.scrollHeight}px`;
   } else {
-    collapsableBlock.style.transition = 'none';
+    collapsableBlock.style.transition = "none";
     collapsableBlock.style.maxHeight = `${collapsableBlock.scrollHeight}px`;
     collapsableBlock.offsetHeight;
     collapsableBlock.style.removeProperty("transition");
@@ -17,9 +17,9 @@ function fold(collapsableBlock: HTMLElement, enableTransition = true) {
     collapsableBlock.style.maxHeight = `${collapsableBlock.scrollHeight}px`;
     collapsableBlock.offsetHeight;
     collapsableBlock.style.maxHeight = `0px`;
-    collapsableBlock.style.overflow = 'hidden';
+    collapsableBlock.style.overflow = "hidden";
   } else {
-    collapsableBlock.style.transition = 'none';
+    collapsableBlock.style.transition = "none";
     collapsableBlock.style.maxHeight = `0px`;
     collapsableBlock.offsetHeight;
     collapsableBlock.style.removeProperty("transition");
@@ -54,4 +54,4 @@ function unfoldActions(collapsableBlock: HTMLElement) {
   collapsableBlock.classList.remove("folded");
 }
 
-export {fold, unfold};
+export { fold, unfold };

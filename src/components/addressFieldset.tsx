@@ -5,21 +5,9 @@ interface AddressFieldSetProps {
 }
 
 function AddressFieldset(props: AddressFieldSetProps) {
-  return (
-    <fieldset>
-      <div className="form-row">
-        <label>First name:</label>
-        <input
-          className="form-control"
-          type="text"
-          name={`${props.prefix}_firstName`}
-          required
-        />
-      </div>
-      <div className="form-row">
-        <label>Last name:</label>
-        <input type="text" name={`${props.prefix}_lastName`} required />
-      </div>
+  const isBilling = (props.prefix === "billing") as boolean;
+  const shippingBlock = (
+    <React.Fragment>
       <div className="form-row">
         <label>Email:</label>
         <input
@@ -39,6 +27,24 @@ function AddressFieldset(props: AddressFieldSetProps) {
           required
         />
       </div>
+    </React.Fragment>
+  );
+  return (
+    <fieldset>
+      <div className="form-row">
+        <label>First name:</label>
+        <input
+          className="form-control"
+          type="text"
+          name={`${props.prefix}_firstName`}
+          required
+        />
+      </div>
+      <div className="form-row">
+        <label>Last name:</label>
+        <input type="text" name={`${props.prefix}_lastName`} required />
+      </div>
+      {!isBilling && shippingBlock}
       <div className="form-row">
         <label>Country:</label>
         <input

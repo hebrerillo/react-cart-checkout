@@ -1,13 +1,15 @@
 import React, { useRef, useState } from "react";
 import { AddressFieldset } from "./addressFieldset";
 
+/**
+ * The address form component. Made up of the shipping fieldset and the billing fieldset.
+ */
 function AddressForm() {
   const formRef = useRef(null);
   //  const MANDATORY_FIELD_ERROR_MESSAGE = "Mandatory field";
   //  const INVALID_FIELD_ERROR_MESSAGE = "Invalid field";
   const [isValidated, setIsValidated] = useState(false);
 
-  console.log("rednering");
   /**
    * Callback executed when clicking the submit button to submit the address form
    */
@@ -32,7 +34,6 @@ function AddressForm() {
 
   function handleSameShippingBillingCheckbox(event: React.ChangeEvent): void {
     console.log(event.target);
-    
   }
 
   return (
