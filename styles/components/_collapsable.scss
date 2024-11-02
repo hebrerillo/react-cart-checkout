@@ -1,0 +1,8 @@
+.collapsable {
+  transition: max-height .3s linear;
+}
+
+.folded {
+  max-height: 0;
+  overflow: hidden;
+}

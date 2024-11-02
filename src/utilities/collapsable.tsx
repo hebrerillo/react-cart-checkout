@@ -1,4 +1,7 @@
-function unfold(collapsableBlock: HTMLElement, enableTransition = true): void {
+function unfold(collapsableBlock: HTMLElement | null, enableTransition = true): void {
+  if (!collapsableBlock) {
+    return;
+  }
   if (enableTransition) {
     collapsableBlock.addEventListener("transitionend", transitionEnd);
     collapsableBlock.style.maxHeight = `${collapsableBlock.scrollHeight}px`;
@@ -11,7 +14,10 @@ function unfold(collapsableBlock: HTMLElement, enableTransition = true): void {
   }
 }
 
-function fold(collapsableBlock: HTMLElement, enableTransition = true) {
+function fold(collapsableBlock: HTMLElement | null, enableTransition = true) {
+  if (!collapsableBlock) {
+    return;
+  }
   if (enableTransition) {
     collapsableBlock.addEventListener("transitionend", transitionEnd);
     collapsableBlock.style.maxHeight = `${collapsableBlock.scrollHeight}px`;
@@ -33,7 +39,6 @@ function transitionEnd(event: TransitionEvent) {
   }
   const collapsableBlock = event.target as HTMLElement;
   const maxHeightValueNumber = parseInt(collapsableBlock.style.maxHeight);
-  console.log("transitionend", maxHeightValueNumber);
   if (maxHeightValueNumber > 0) {
     unfoldActions(collapsableBlock);
   } else if (maxHeightValueNumber === 0) {

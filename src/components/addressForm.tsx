@@ -1,11 +1,13 @@
 import React, { useRef, useState } from "react";
 import { AddressFieldset } from "./addressFieldset";
+import { fold, unfold } from "../utilities/collapsable";
 
 /**
  * The address form component. Made up of the shipping fieldset and the billing fieldset.
  */
 function AddressForm() {
   const formRef = useRef(null);
+  const billingBlock = useRef(null);
   //  const MANDATORY_FIELD_ERROR_MESSAGE = "Mandatory field";
   //  const INVALID_FIELD_ERROR_MESSAGE = "Invalid field";
   const [isValidated, setIsValidated] = useState(false);
@@ -32,8 +34,16 @@ function AddressForm() {
     });
   }
 
+  /**
+   * Callback executed when the check to add a billing address changes.
+   */
   function handleSameShippingBillingCheckbox(event: React.ChangeEvent): void {
-    console.log(event.target);
+    const checked = (event.target as HTMLInputElement).checked;
+    if (!checked){
+      unfold(billingBlock.current);
+    } else {
+      fold(billingBlock.current);
+    }
   }
 
   return (
@@ -49,7 +59,9 @@ function AddressForm() {
         onChange={handleSameShippingBillingCheckbox}
         value="sameBilling"
       />
-      <AddressFieldset prefix={"billing"} />
+      <div className="collapsable folded" ref={billingBlock}>
+        <AddressFieldset prefix={"billing"} />
+      </div>
       <button type="submit" onClick={handleSubmitClick}>
         Send
       </button>
