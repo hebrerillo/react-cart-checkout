@@ -39,7 +39,7 @@ function AddressForm() {
    */
   function handleSameShippingBillingCheckbox(event: React.ChangeEvent): void {
     const checked = (event.target as HTMLInputElement).checked;
-    if (!checked){
+    if (!checked) {
       unfold(billingBlock.current);
     } else {
       fold(billingBlock.current);
