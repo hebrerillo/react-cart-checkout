@@ -1,6 +1,6 @@
-let boundTransitionEnd = null as any;
+let boundTransitionEnd: ((this: HTMLElement, ev: TransitionEvent) => any);
 
-function transitionCancel(event: TransitionEvent): any {
+function transitionCancel(event: TransitionEvent) {
   const target = event.target as HTMLElement;
   target.removeEventListener("transitioncancel", transitionCancel);
   target.removeEventListener("transitionend", boundTransitionEnd);
