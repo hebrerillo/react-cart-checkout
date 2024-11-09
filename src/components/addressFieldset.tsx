@@ -2,6 +2,7 @@ import React from "react";
 
 interface AddressFieldSetProps {
   prefix: string;
+  disabled: boolean;
 }
 
 function AddressFieldset(props: AddressFieldSetProps) {
@@ -30,7 +31,7 @@ function AddressFieldset(props: AddressFieldSetProps) {
     </React.Fragment>
   );
   return (
-    <fieldset>
+    <fieldset disabled={props.disabled}>
       <div className="form-row">
         <label>First name:</label>
         <input

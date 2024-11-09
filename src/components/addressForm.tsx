@@ -11,6 +11,7 @@ function AddressForm() {
   //  const MANDATORY_FIELD_ERROR_MESSAGE = "Mandatory field";
   //  const INVALID_FIELD_ERROR_MESSAGE = "Invalid field";
   const [isValidated, setIsValidated] = useState(false);
+  const [isBillingDisabled, setIsBillingDisabled] = useState(true);
 
   /**
    * Callback executed when clicking the submit button to submit the address form
@@ -35,14 +36,29 @@ function AddressForm() {
   }
 
   /**
+   * Enable billing address
+   */
+  function enableBillingAddress() {
+    setIsBillingDisabled(false);
+  }
+
+  /**
+   * Disable billing address
+   */
+  function disableBillingAddress() {
+    setIsBillingDisabled(true);
+  }
+
+  /**
    * Callback executed when the check to add a billing address changes.
    */
   function handleSameShippingBillingCheckbox(event: React.ChangeEvent): void {
     const checked = (event.target as HTMLInputElement).checked;
     if (!checked) {
+      enableBillingAddress();
       unfold(billingBlock.current);
     } else {
-      fold(billingBlock.current);
+      fold(billingBlock.current, true, disableBillingAddress);
     }
   }
 
@@ -51,7 +67,7 @@ function AddressForm() {
       className={`form-address ${isValidated ? "is-validated" : ""}`}
       ref={formRef}
     >
-      <AddressFieldset prefix={"shipping"} />
+      <AddressFieldset prefix={"shipping"} disabled={false} />
       <input
         type="checkbox"
         name="same_shipping_for_billing"
@@ -60,7 +76,7 @@ function AddressForm() {
         value="sameBilling"
       />
       <div className="collapsable folded" ref={billingBlock}>
-        <AddressFieldset prefix={"billing"} />
+        <AddressFieldset prefix={"billing"} disabled={isBillingDisabled} />
       </div>
       <button type="submit" onClick={handleSubmitClick}>
         Send
