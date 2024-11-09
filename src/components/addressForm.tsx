@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import GlobalContext from "../context/global";
 import { AddressFieldset } from "./addressFieldset";
 import { fold, unfold } from "../utilities/collapsable";
 
@@ -8,6 +9,7 @@ import { fold, unfold } from "../utilities/collapsable";
 function AddressForm() {
   const formRef = useRef(null);
   const billingBlock = useRef(null);
+  const { scrollToCheckoutElement } = useContext(GlobalContext);
   //  const MANDATORY_FIELD_ERROR_MESSAGE = "Mandatory field";
   //  const INVALID_FIELD_ERROR_MESSAGE = "Invalid field";
   const [isValidated, setIsValidated] = useState(false);
@@ -30,7 +32,7 @@ function AddressForm() {
       const inputElement = element as HTMLInputElement;
       if (!inputElement.checkValidity() && !firstError) {
         firstError = true;
-        inputElement.scrollIntoView({ behavior: "smooth" });
+        scrollToCheckoutElement(inputElement);
       }
     });
   }
