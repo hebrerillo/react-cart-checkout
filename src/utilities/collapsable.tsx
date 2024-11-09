@@ -1,4 +1,4 @@
-let boundTransitionEnd: ((this: HTMLElement, ev: TransitionEvent) => any);
+let boundTransitionEnd: (this: HTMLElement, ev: TransitionEvent) => any;
 
 function transitionCancel(event: TransitionEvent) {
   const target = event.target as HTMLElement;
@@ -16,14 +16,9 @@ function unfold(
   }
 
   if (enableTransition && collapsableBlock.classList.contains("folded")) {
-    boundTransitionEnd = transitionEnd.bind(
-      collapsableBlock,
-      endCallback as any,
-    ) as any;
-    collapsableBlock.addEventListener(
-      "transitioncancel",
-      transitionCancel as any,
-    );
+    boundTransitionEnd = transitionEnd.bind(collapsableBlock, endCallback);
+
+    collapsableBlock.addEventListener("transitioncancel", transitionCancel);
     collapsableBlock.addEventListener("transitionend", boundTransitionEnd);
     collapsableBlock.style.maxHeight = `${collapsableBlock.scrollHeight}px`;
   } else {
@@ -44,14 +39,8 @@ function fold(
     return;
   }
   if (enableTransition && !collapsableBlock.classList.contains("folded")) {
-    boundTransitionEnd = transitionEnd.bind(
-      collapsableBlock,
-      endCallback as any,
-    ) as any;
-    collapsableBlock.addEventListener(
-      "transitioncancel",
-      transitionCancel as any,
-    );
+    boundTransitionEnd = transitionEnd.bind(collapsableBlock, endCallback);
+    collapsableBlock.addEventListener("transitioncancel", transitionCancel);
     collapsableBlock.addEventListener("transitionend", boundTransitionEnd);
     collapsableBlock.style.maxHeight = `${collapsableBlock.scrollHeight}px`;
     collapsableBlock.offsetHeight;
