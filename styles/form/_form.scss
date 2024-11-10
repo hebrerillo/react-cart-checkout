@@ -9,7 +9,7 @@
   color: var(--color-invalid-input);
   display: none;
 
-  .form-address.is-validated .form-control:invalid ~ & {
+  .is-validated .form-control:invalid ~ & {
     display: block;
   }
 }
