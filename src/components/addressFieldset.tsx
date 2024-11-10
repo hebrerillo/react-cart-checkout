@@ -1,4 +1,5 @@
 import React from "react";
+import { INVALID_FIELD_ERROR_MESSAGE, MANDATORY_FIELD_ERROR_MESSAGE } from "../constants";
 
 interface AddressFieldSetProps {
   prefix: string;
@@ -18,6 +19,7 @@ function AddressFieldset(props: AddressFieldSetProps) {
           pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
           required
         />
+        <div className="invalid-feedback">{INVALID_FIELD_ERROR_MESSAGE}</div>
       </div>
       <div className="form-row">
         <label>Phone number:</label>
@@ -26,6 +28,15 @@ function AddressFieldset(props: AddressFieldSetProps) {
           type="text"
           name={`${props.prefix}_phone`}
           required
+        />
+        <div className="invalid-feedback">{MANDATORY_FIELD_ERROR_MESSAGE}</div>
+      </div>
+      <div className="form-row">
+        <label>Company:</label>
+        <input
+          className="form-control"
+          type="text"
+          name={`${props.prefix}_company`}
         />
       </div>
     </React.Fragment>
@@ -40,10 +51,12 @@ function AddressFieldset(props: AddressFieldSetProps) {
           name={`${props.prefix}_firstName`}
           required
         />
+        <div className="invalid-feedback">{MANDATORY_FIELD_ERROR_MESSAGE}</div>
       </div>
       <div className="form-row">
         <label>Last name:</label>
         <input type="text" name={`${props.prefix}_lastName`} required />
+        <div className="invalid-feedback">{MANDATORY_FIELD_ERROR_MESSAGE}</div>
       </div>
       {!isBilling && shippingBlock}
       <div className="form-row">
@@ -54,6 +67,7 @@ function AddressFieldset(props: AddressFieldSetProps) {
           name={`${props.prefix}_country`}
           required
         />
+        <div className="invalid-feedback">{MANDATORY_FIELD_ERROR_MESSAGE}</div>
       </div>
       <div className="form-row">
         <label>City:</label>
@@ -63,6 +77,7 @@ function AddressFieldset(props: AddressFieldSetProps) {
           name={`${props.prefix}_city`}
           required
         />
+        <div className="invalid-feedback">{MANDATORY_FIELD_ERROR_MESSAGE}</div>
       </div>
       <div className="form-row">
         <label>Zip:</label>
@@ -72,6 +87,7 @@ function AddressFieldset(props: AddressFieldSetProps) {
           name={`${props.prefix}_zip`}
           required
         />
+        <div className="invalid-feedback">{MANDATORY_FIELD_ERROR_MESSAGE}</div>
       </div>
     </fieldset>
   );
