@@ -32,7 +32,7 @@ function AddressForm() {
       const inputElement = element as HTMLInputElement;
       if (!inputElement.checkValidity() && !firstError) {
         firstError = true;
-        scrollToCheckoutElement(inputElement);
+        scrollToCheckoutElement(inputElement.closest(".form-row"));
       }
     });
   }

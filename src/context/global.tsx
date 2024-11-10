@@ -18,9 +18,10 @@ function GlobalProvider({ children }: { children: React.ReactNode }) {
    * @param {HTMLElement} element The element to scroll to
    */
   function scrollToCheckoutElement(element: HTMLElement) {
+    const extraTopOffset = 10;
     CheckoutUtils.scrollToElement(
       element,
-      checkoutHeader.current?.offsetHeight ?? 0,
+      (checkoutHeader.current?.offsetHeight ?? 0) + extraTopOffset,
     );
   }
 
