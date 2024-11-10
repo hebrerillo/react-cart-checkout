@@ -10,8 +10,6 @@ function AddressForm() {
   const formRef = useRef(null);
   const billingBlock = useRef(null);
   const { scrollToCheckoutElement } = useContext(GlobalContext);
-  //  const MANDATORY_FIELD_ERROR_MESSAGE = "Mandatory field";
-  //  const INVALID_FIELD_ERROR_MESSAGE = "Invalid field";
   const [isValidated, setIsValidated] = useState(false);
   const [isBillingDisabled, setIsBillingDisabled] = useState(true);
 
