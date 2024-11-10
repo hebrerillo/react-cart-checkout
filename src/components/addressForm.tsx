@@ -8,9 +8,10 @@ import { fold, unfold } from "../utilities/collapsable";
  */
 function AddressForm() {
   const formRef = useRef(null);
+  const shippingFieldsetRef = useRef<HTMLFieldSetElement>(null);
+  const billingFieldsetRef = useRef<HTMLFieldSetElement>(null);
   const billingBlock = useRef(null);
   const { scrollToCheckoutElement } = useContext(GlobalContext);
-  const [isValidated, setIsValidated] = useState(false);
   const [isBillingDisabled, setIsBillingDisabled] = useState(true);
 
   /**
@@ -19,7 +20,9 @@ function AddressForm() {
   function handleSubmitClick(event: React.MouseEvent): void {
     event.preventDefault();
     const formElement = formRef.current! as HTMLFormElement;
-    setIsValidated(true);
+    shippingFieldsetRef.current?.classList.add("is-validated");
+    !isBillingDisabled && billingFieldsetRef.current?.classList.add("is-validated");
+
     if (formElement.checkValidity()) {
       //TODO send form
       return;
@@ -47,6 +50,7 @@ function AddressForm() {
    */
   function disableBillingAddress() {
     setIsBillingDisabled(true);
+    billingFieldsetRef.current?.classList.remove("is-validated");
   }
 
   /**
@@ -64,10 +68,12 @@ function AddressForm() {
 
   return (
     <form
-      className={`form-address ${isValidated ? "is-validated" : ""}`}
+      className="form-address"
       ref={formRef}
     >
-      <AddressFieldset prefix={"shipping"} disabled={false} />
+      <fieldset ref={shippingFieldsetRef}>
+        <AddressFieldset prefix={"shipping"} />
+      </fieldset>
       <input
         type="checkbox"
         name="same_shipping_for_billing"
@@ -76,7 +82,9 @@ function AddressForm() {
         value="sameBilling"
       />
       <div className="collapsable folded" ref={billingBlock}>
-        <AddressFieldset prefix={"billing"} disabled={isBillingDisabled} />
+        <fieldset ref={billingFieldsetRef} disabled={isBillingDisabled}>
+          <AddressFieldset prefix={"billing"} />
+        </fieldset>
       </div>
       <button type="submit" onClick={handleSubmitClick}>
         Send

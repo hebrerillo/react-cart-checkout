@@ -3,7 +3,6 @@ import { INVALID_FIELD_ERROR_MESSAGE, MANDATORY_FIELD_ERROR_MESSAGE } from "../c
 
 interface AddressFieldSetProps {
   prefix: string;
-  disabled: boolean;
 }
 
 function AddressFieldset(props: AddressFieldSetProps) {
@@ -42,7 +41,7 @@ function AddressFieldset(props: AddressFieldSetProps) {
     </React.Fragment>
   );
   return (
-    <fieldset disabled={props.disabled}>
+    <fieldset>
       <div className="form-row">
         <label>First name:</label>
         <input
