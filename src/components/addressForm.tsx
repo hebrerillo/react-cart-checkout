@@ -21,7 +21,8 @@ function AddressForm() {
     event.preventDefault();
     const formElement = formRef.current! as HTMLFormElement;
     shippingFieldsetRef.current?.classList.add("is-validated");
-    !isBillingDisabled && billingFieldsetRef.current?.classList.add("is-validated");
+    !isBillingDisabled &&
+      billingFieldsetRef.current?.classList.add("is-validated");
 
     if (formElement.checkValidity()) {
       //TODO send form
@@ -67,10 +68,7 @@ function AddressForm() {
   }
 
   return (
-    <form
-      className="form-address"
-      ref={formRef}
-    >
+    <form className="form-address" ref={formRef}>
       <fieldset ref={shippingFieldsetRef}>
         <AddressFieldset prefix={"shipping"} />
       </fieldset>

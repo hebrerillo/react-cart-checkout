@@ -1,5 +1,8 @@
 import React from "react";
-import { INVALID_FIELD_ERROR_MESSAGE, MANDATORY_FIELD_ERROR_MESSAGE } from "../constants";
+import {
+  INVALID_FIELD_ERROR_MESSAGE,
+  MANDATORY_FIELD_ERROR_MESSAGE,
+} from "../constants";
 
 interface AddressFieldSetProps {
   prefix: string;

@@ -2,12 +2,12 @@ import { createContext } from "react";
 import React, { useRef } from "react";
 import { CheckoutUtils } from "../utilities/utils";
 
-export interface GlobalContextType {
+interface GlobalContextType {
   scrollToCheckoutElement: Function;
   checkoutHeader: React.MutableRefObject<HTMLElement | null>;
 }
 
-const GlobalContext = createContext<GlobalContextType>({} as GlobalContextType);
+const GlobalContext = createContext({} as GlobalContextType);
 
 function GlobalProvider({ children }: { children: React.ReactNode }) {
   const checkoutHeader = useRef<HTMLElement>(null);
