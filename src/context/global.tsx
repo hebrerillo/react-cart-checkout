@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import React, { useRef } from "react";
 import { CheckoutUtils } from "../utilities/utils";
 
@@ -37,5 +37,8 @@ function GlobalProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export { GlobalProvider };
-export default GlobalContext;
+function useGlobalContext() {
+  return useContext(GlobalContext);
+}
+
+export { GlobalProvider, useGlobalContext };

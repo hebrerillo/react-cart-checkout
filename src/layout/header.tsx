@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import GlobalContext from "../context/global";
+import React from "react";
+import { useGlobalContext } from "../context/global";
 
 function Header() {
-  const { checkoutHeader } = useContext(GlobalContext);
+  const { checkoutHeader } = useGlobalContext();
   return (
     <header
       className="site-header site-horizontal-padding"

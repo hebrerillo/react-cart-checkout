@@ -1,5 +1,5 @@
-import React, { useContext, useRef, useState } from "react";
-import GlobalContext from "../context/global";
+import React, { useRef, useState } from "react";
+import { useGlobalContext } from "../context/global";
 import { AddressFieldset } from "./addressFieldset";
 import { fold, unfold } from "../utilities/collapsable";
 
@@ -11,7 +11,7 @@ function AddressForm() {
   const shippingFieldsetRef = useRef<HTMLFieldSetElement>(null);
   const billingFieldsetRef = useRef<HTMLFieldSetElement>(null);
   const billingBlock = useRef(null);
-  const { scrollToCheckoutElement } = useContext(GlobalContext);
+  const { scrollToCheckoutElement } = useGlobalContext();
   const [isBillingDisabled, setIsBillingDisabled] = useState(true);
 
   /**
