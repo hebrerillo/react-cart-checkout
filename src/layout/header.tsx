@@ -2,11 +2,11 @@ import React from "react";
 import { useGlobalContext } from "src/context/global";
 
 function Header() {
-  const { checkoutHeader } = useGlobalContext();
+  const { siteHeader } = useGlobalContext();
   return (
     <header
       className="site-header site-horizontal-padding"
-      ref={checkoutHeader}
+      ref={siteHeader}
     >
       <span className="site-header__left-arrow">&larr;</span>
       <a className="site-header__logo" href="#">

@@ -4,13 +4,13 @@ import { CheckoutUtils } from "src/utilities/utils";
 
 interface GlobalContextType {
   scrollToCheckoutElement: Function;
-  checkoutHeader: React.MutableRefObject<HTMLElement | null>;
+  siteHeader: React.MutableRefObject<HTMLElement | null>;
 }
 
 const GlobalContext = createContext({} as GlobalContextType);
 
 function GlobalProvider({ children }: { children: React.ReactNode }) {
-  const checkoutHeader = useRef<HTMLElement>(null);
+  const siteHeader = useRef<HTMLElement>(null);
 
   /**
    * Scrolls to a specific checkout element, substracting the height of the checkout header.
@@ -21,13 +21,13 @@ function GlobalProvider({ children }: { children: React.ReactNode }) {
     const extraTopOffset = 10;
     CheckoutUtils.scrollToElement(
       element,
-      (checkoutHeader.current?.offsetHeight ?? 0) + extraTopOffset,
+      (siteHeader.current?.offsetHeight ?? 0) + extraTopOffset,
     );
   }
 
   const valueToShare = {
     scrollToCheckoutElement,
-    checkoutHeader,
+    siteHeader,
   };
 
   return (
