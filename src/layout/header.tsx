@@ -1,5 +1,5 @@
 import React from "react";
-import { useGlobalContext } from "../context/global";
+import { useGlobalContext } from "src/context/global";
 
 function Header() {
   const { checkoutHeader } = useGlobalContext();

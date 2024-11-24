@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Checkout from "./Checkout";
-import { GlobalProvider } from "./context/global";
+import Checkout from "src/Checkout";
+import { GlobalProvider } from "src/context/global";
 
 import "../styles/main.scss";
 

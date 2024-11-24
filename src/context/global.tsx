@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import React, { useRef } from "react";
-import { CheckoutUtils } from "../utilities/utils";
+import { CheckoutUtils } from "src/utilities/utils";
 
 interface GlobalContextType {
   scrollToCheckoutElement: Function;

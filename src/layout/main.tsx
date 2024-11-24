@@ -1,5 +1,5 @@
 import React from "react";
-import Data from "../steps/data";
+import Data from "src/steps/data";
 
 function Main() {
   return (

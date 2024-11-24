@@ -1,5 +1,5 @@
 import React from "react";
-import AddressForm from "../components/addressForm";
+import AddressForm from "src/components/addressForm";
 
 function Data() {
   return (

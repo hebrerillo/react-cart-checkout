@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
-import { useGlobalContext } from "../context/global";
-import { AddressFieldset } from "./addressFieldset";
+import { useGlobalContext } from "src/context/global";
+import { AddressFieldset } from "src/components/addressFieldset";
 import { fold, unfold } from "../utilities/collapsable";
 
 /**
