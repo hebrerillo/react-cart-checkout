@@ -1,14 +1,14 @@
 import React from "react";
 import Header from "src/layout/header";
-import Main from "src/layout/main";
+import { ProductsList } from "src/products-list/products-list";
 
-function Checkout() {
+function App() {
   return (
     <div className="main-container">
       <Header />
-      <Main />
+      <ProductsList />
     </div>
   );
 }
 
-export default Checkout;
+export default App;
