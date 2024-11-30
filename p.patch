@@ -1,0 +1,19 @@
+diff --git a/src/products-list/products-list.tsx b/src/products-list/products-list.tsx
+index 11a774c..d6535cb 100644
+--- a/src/products-list/products-list.tsx
++++ b/src/products-list/products-list.tsx
+@@ -4,6 +4,14 @@ import { Product } from "src/products-list/interface";
+ 
+ function ProductList() {
+   const [productList, setProductList] = useState([] as Array<Product>);
++  const observerOptions = {
++    root: null,
++    thresold: 0,
++    rootMargin: "0px 0px 0px 0px"
++  };
++
++  const observer = new IntersectionObserver(() => {
++  }, observerOptions);
+ 
+   function updateProductsList(newList: Array<Product>) {
+     setProductList([...productList, ...newList]);
