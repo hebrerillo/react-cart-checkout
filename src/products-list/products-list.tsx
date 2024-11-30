@@ -10,6 +10,7 @@ function ProductList() {
   }
 
   const fetchProducts = async () => {
+    //TODO: quitar el await
     updateProductsList(await ProductListManager.fetchProducts());
   };
 
