@@ -1,23 +1,13 @@
 import React, { useState } from "react";
-import { ListInterface } from "src/products-list/interface";
+import { ProductRequest } from "src/products-list/product-list-request";
+import { Product } from "src/products-list/interface";
 
 function ProductList() {
-  const initialValues = {
-    list: [
-      {
-        id: "1",
-        img_url: "https://images.unsplash.com/photo-1721332153370-56d7cc352d63",
-      },
-    ],
-  } as ListInterface;
-  const [productList, _] = useState(initialValues as ListInterface);
-  const displayedList = productList.list.map((product) => {
+  const [productList, setProductList] = useState([] as Array<Product>);
+  const displayedList = productList.map((product: Product) => {
     return (
       <li className="product__item" key={product.id}>
-        <img
-          className="product__item-img"
-          src="https://images.unsplash.com/photo-1721332153370-56d7cc352d63"
-        />
+        <img className="product__item-img" src={product.img_url} />
         <div className="product__description">
           <h3>Renault Megane</h3>
         </div>
@@ -25,12 +15,21 @@ function ProductList() {
     );
   });
 
-  //  function updateProductsList(newList: Array<Product>) {
-  //    setProductList([...productList, ...newList]);
-  //  }
+  function updateProductsList(newList: Array<Product>) {
+    setProductList([...productList, ...newList]);
+  }
+
+  const fetchProducts = async () => {
+    updateProductsList(await ProductRequest.fetchProducts());
+  };
 
   return (
-    <ul className="product__list site-horizontal-padding">{displayedList}</ul>
+    <ul
+      className="product__list site-horizontal-padding"
+      onClick={fetchProducts}
+    >
+      {displayedList}
+    </ul>
   );
 }
 
