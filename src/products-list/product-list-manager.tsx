@@ -4,8 +4,10 @@ import { HTTPRequest, RequestParams } from "src/utilities/request";
 
 export class ProductListManager {
   private lastProductRef: React.RefObject<HTMLLIElement>;
+  private observerCallback: Function;
 
-  constructor() {
+  constructor(observerCallback: Function) {
+    this.observerCallback = observerCallback;
     this.lastProductRef = useRef() as React.RefObject<HTMLLIElement>;
   }
 
@@ -36,6 +38,7 @@ export class ProductListManager {
     };
     const observer = new IntersectionObserver((entries) => {
       console.log("observer entries", entries);
+      this.observerCallback();
     }, observerOptions);
 
     this.lastProductRef?.current &&
@@ -48,29 +51,18 @@ export class ProductListManager {
    */
   public renderList(productList: Array<Product>): React.JSX.Element[] {
     return productList.map((product, index) => {
-      if (index === productList.length - 1) {
-        return (
-          <li
-            className="product__item"
-            key={product.id}
-            ref={this.lastProductRef}
-          >
-            <img className="product__item-img" src={product.img_url} />
-            <div className="product__description">
-              <h3>{product.name}</h3>
-            </div>
-          </li>
-        );
-      } else {
-        return (
-          <li className="product__item" key={product.id}>
-            <img className="product__item-img" src={product.img_url} />
-            <div className="product__description">
-              <h3>{product.name}</h3>
-            </div>
-          </li>
-        );
-      }
+      return (
+        <li
+          className="product__item"
+          key={product.id}
+          ref={index === productList.length - 1 ? this.lastProductRef : null}
+        >
+          <img className="product__item-img" src={product.img_url} />
+          <div className="product__description">
+            <h3>{product.name}</h3>
+          </div>
+        </li>
+      );
     });
   }
 }
