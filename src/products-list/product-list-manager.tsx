@@ -31,9 +31,10 @@ export class ProductListManager {
   }
 
   /**
-   * Executed after rendering
+   * Observes the last product in the list. When the last product
+   * is intersecting, a new request for more products is performed.
    */
-  public afterRender() {
+  public observeLastProduct() {
     const observerOptions = {
       root: null,
       thresold: 0,
