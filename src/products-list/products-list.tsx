@@ -6,8 +6,6 @@ function ProductList() {
   const [productList, setProductList] = useState([] as Array<Product>);
   const listManager = new ProductListManager(fetchProducts);
 
-  useEffect(listManager.afterRender.bind(listManager));
-
   function updateProductsList(newList: Array<Product>) {
     setProductList([...productList, ...newList]);
   }
@@ -15,7 +13,12 @@ function ProductList() {
   async function fetchProducts() {
     //TODO: quitar el await
     updateProductsList(await listManager.fetchProducts());
-  };
+  }
+
+  useEffect(listManager.afterRender.bind(listManager));
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <ul
