@@ -5,10 +5,27 @@ import { HTTPRequest, RequestParams } from "src/utilities/request";
 export class ProductListManager {
   private lastProductRef: React.RefObject<HTMLLIElement>; //The last product in the list
   private observerCallback: Function; //Callback to be executed when the last product is intersecting
+  private observer!: IntersectionObserver;
 
   constructor(observerCallback: Function) {
     this.observerCallback = observerCallback;
     this.lastProductRef = useRef() as React.RefObject<HTMLLIElement>;
+    this.initializeObserver();
+  }
+
+  private initializeObserver() {
+    const observerOptions = {
+      root: null,
+      thresold: 0,
+      rootMargin: "0px 0px 0px 0px",
+    };
+
+    this.observer = new IntersectionObserver((entries) => {
+      if (entries.length > 0 && entries[0].isIntersecting) {
+        console.log("intersecting", entries[0]);
+        this.observerCallback();
+      }
+    }, observerOptions);
   }
 
   /**
@@ -35,19 +52,16 @@ export class ProductListManager {
    * is intersecting, a new request for more products is performed.
    */
   public observeLastProduct() {
-    const observerOptions = {
-      root: null,
-      thresold: 0,
-      rootMargin: "0px 0px 0px 0px",
-    };
-    const observer = new IntersectionObserver((entries) => {
-      if (entries.length > 0 && entries[0].isIntersecting) {
-        this.observerCallback();
-      }
-    }, observerOptions);
-
     this.lastProductRef?.current &&
-      observer.observe(this.lastProductRef?.current);
+      this.observer.observe(this.lastProductRef?.current);
+  }
+
+  /**
+   * Unobserves the last product
+   */
+  public unobserveLastProduct() {
+    this.lastProductRef?.current &&
+      this.observer.unobserve(this.lastProductRef?.current);
   }
 
   /**

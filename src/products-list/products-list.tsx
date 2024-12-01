@@ -15,7 +15,13 @@ function ProductList() {
     updateProductsList(await listManager.fetchProducts());
   }
 
-  useEffect(listManager.observeLastProduct.bind(listManager));
+  useEffect(() => { 
+    listManager.observeLastProduct(); 
+    return ()=> {
+      listManager.unobserveLastProduct();
+    };
+  });
+
   useEffect(() => {
     fetchProducts();
   }, []);
