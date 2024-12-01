@@ -6,7 +6,7 @@ function ProductList() {
   const [productList, setProductList] = useState([] as Array<Product>);
   const listManager = new ProductListManager(fetchProducts);
 
-  useEffect(listManager.render.bind(listManager));
+  useEffect(listManager.afterRender.bind(listManager));
 
   function updateProductsList(newList: Array<Product>) {
     setProductList([...productList, ...newList]);

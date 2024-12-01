@@ -3,8 +3,8 @@ import { Product } from "src/products-list/interface";
 import { HTTPRequest, RequestParams } from "src/utilities/request";
 
 export class ProductListManager {
-  private lastProductRef: React.RefObject<HTMLLIElement>;
-  private observerCallback: Function;
+  private lastProductRef: React.RefObject<HTMLLIElement>; //The last product in the list
+  private observerCallback: Function; //Callback to be executed when the last product is intersecting
 
   constructor(observerCallback: Function) {
     this.observerCallback = observerCallback;
@@ -30,20 +30,23 @@ export class ProductListManager {
     return result;
   }
 
-  public render() {
+  /**
+   * Executed after rendering
+   */
+  public afterRender() {
     const observerOptions = {
       root: null,
       thresold: 0,
       rootMargin: "0px 0px 0px 0px",
     };
     const observer = new IntersectionObserver((entries) => {
-      console.log("observer entries", entries);
-      this.observerCallback();
+      if (entries.length > 0 && entries[0].isIntersecting) {
+        this.observerCallback();
+      }
     }, observerOptions);
 
     this.lastProductRef?.current &&
       observer.observe(this.lastProductRef?.current);
-    console.log("observing", this.lastProductRef);
   }
 
   /**
