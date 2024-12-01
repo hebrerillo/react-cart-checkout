@@ -29,7 +29,6 @@ function ProductList() {
   return (
     <ul
       className="product__list site-horizontal-padding"
-      onClick={fetchProducts}
     >
       {listManager.renderList(productList)}
     </ul>

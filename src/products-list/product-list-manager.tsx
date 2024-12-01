@@ -36,6 +36,13 @@ export class ProductListManager {
         if (entry.target === this.productsRef.slice(-1)[0].current) {
           this.fetchProductsCallback();
         }
+      } else {
+        const domRect = entry.boundingClientRect;
+        if (domRect.top <= 0) {
+          console.log("Hides from the top", domRect.top);
+        } else {
+          console.log("Hides from the bottom", domRect.top);
+        }
       }
     });
   }
