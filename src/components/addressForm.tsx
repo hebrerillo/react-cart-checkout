@@ -11,7 +11,7 @@ function AddressForm() {
   const shippingFieldsetRef = useRef<HTMLFieldSetElement>(null);
   const billingFieldsetRef = useRef<HTMLFieldSetElement>(null);
   const billingBlock = useRef(null);
-  const { scrollToCheckoutElement } = useGlobalContext();
+  const { globalContextManager } = useGlobalContext();
   const [isBillingDisabled, setIsBillingDisabled] = useState(true);
 
   /**
@@ -34,7 +34,9 @@ function AddressForm() {
       const inputElement = element as HTMLInputElement;
       if (!inputElement.checkValidity() && !firstError) {
         firstError = true;
-        scrollToCheckoutElement(inputElement.closest(".form-row"));
+        globalContextManager.scrollToCheckoutElement(
+          inputElement.closest(".form-row"),
+        );
       }
     });
   }

@@ -1,9 +1,9 @@
 import React, { createRef } from "react";
+import { useGlobalContext } from "src/context/global";
 import { Product } from "src/products-list/interface";
 import { HTTPRequest, RequestParams } from "src/utilities/request";
 
 export class ProductListManager {
-  //@ts-ignore
   private fetchProductsCallback: Function; //Callback to be executed when the last product is intersecting
   private observer!: IntersectionObserver;
   private productsRef: Array<React.RefObject<HTMLLIElement>>;
@@ -15,10 +15,11 @@ export class ProductListManager {
   }
 
   private initializeObserver() {
+    const { globalContextManager } = useGlobalContext();
     const observerOptions = {
       root: null,
       thresold: 0,
-      rootMargin: "0px 0px 0px 0px",
+      rootMargin: `-${globalContextManager.getSiteHeaderHeight()}px 0px 0px 0px`,
     };
 
     this.observer = new IntersectionObserver(
@@ -39,9 +40,9 @@ export class ProductListManager {
       } else {
         const domRect = entry.boundingClientRect;
         if (domRect.top <= 0) {
-          console.log("Hides from the top", domRect.top);
+          console.log("Hides from the top", entry, domRect.top);
         } else {
-          console.log("Hides from the bottom", domRect.top);
+          console.log("Hides from the bottom", entry, domRect.top);
         }
       }
     });

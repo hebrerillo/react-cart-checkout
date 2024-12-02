@@ -1,37 +1,17 @@
-import { createContext, useContext } from "react";
-import React, { useRef } from "react";
-import { CheckoutUtils } from "src/utilities/utils";
+import React, { createContext, useContext } from "react";
+import { GlobalContextManager } from "src/context/globalContext";
 
 interface GlobalContextType {
-  scrollToCheckoutElement: Function;
-  siteHeader: React.MutableRefObject<HTMLElement | null>;
+  globalContextManager: GlobalContextManager;
 }
 
 const GlobalContext = createContext({} as GlobalContextType);
 
 function GlobalProvider({ children }: { children: React.ReactNode }) {
-  const siteHeader = useRef<HTMLElement>(null);
-
-  /**
-   * Scrolls to a specific checkout element, substracting the height of the checkout header.
-   *
-   * @param {HTMLElement} element The element to scroll to
-   */
-  function scrollToCheckoutElement(element: HTMLElement) {
-    const extraTopOffset = 10;
-    CheckoutUtils.scrollToElement(
-      element,
-      (siteHeader.current?.offsetHeight ?? 0) + extraTopOffset,
-    );
-  }
-
-  const valueToShare = {
-    scrollToCheckoutElement,
-    siteHeader,
-  };
+  const globalContextManager = new GlobalContextManager();
 
   return (
-    <GlobalContext.Provider value={valueToShare}>
+    <GlobalContext.Provider value={{ globalContextManager }}>
       {children}
     </GlobalContext.Provider>
   );

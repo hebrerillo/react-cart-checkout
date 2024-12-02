@@ -27,9 +27,7 @@ function ProductList() {
   }, []);
 
   return (
-    <ul
-      className="product__list site-horizontal-padding"
-    >
+    <ul className="product__list site-horizontal-padding">
       {listManager.renderList(productList)}
     </ul>
   );
