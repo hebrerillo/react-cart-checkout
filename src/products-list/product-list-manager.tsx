@@ -59,7 +59,7 @@ export class ProductListManager {
     };
 
     const params: RequestParams = {
-      url: "http://127.0.0.1/react-test-app1/php/products_list.php",
+      url: "http://localhost:8082/",
       successFunc: successFunc,
     };
 
