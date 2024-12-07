@@ -59,7 +59,7 @@ export class ProductListManager {
     };
 
     const params: RequestParams = {
-      url: "http://localhost:8082/",
+      url: "http://localhost:8082/carslist",
       successFunc: successFunc,
     };
 
