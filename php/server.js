@@ -21,9 +21,12 @@ http
 function getCarsList() {
   let output = [];
   for (let i = 0; i < 10; i++) {
+    const id = Math.floor(Math.random() * 100000);
     let obj = {
-      id: Math.floor(Math.random() * 100000),
+      id: id,
       name: "renault",
+      mobile_url: "http://localhost/original.jpg?id" + id + "&mobile",
+      desktop_url: "http://localhost/original.jpg?id" + id + "&desktop",
     };
     output.push(obj);
   }

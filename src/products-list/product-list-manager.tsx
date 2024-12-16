@@ -59,7 +59,7 @@ export class ProductListManager {
     };
 
     const params: RequestParams = {
-      url: "http://127.0.0.1/react-test-app1/php/products_list.php",
+      url: "http://localhost:8082/carslist",
       successFunc: successFunc,
     };
 
@@ -97,7 +97,7 @@ export class ProductListManager {
           ref={this.productsRef[index]}
           data-id={product.id}
         >
-          <img className="product__item-img" src={product.img_url} />
+          <img className="product__item-img" src={product.desktop_url} />
           <div className="product__description">
             <h3>{product.name}</h3>
           </div>

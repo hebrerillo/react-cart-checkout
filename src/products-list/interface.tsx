@@ -1,5 +1,6 @@
 export interface Product {
   id: string;
-  img_url: string;
+  desktop_url: string;
+  mobile_url: string;
   name: string;
 }
