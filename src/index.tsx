@@ -1,14 +1,16 @@
-import React from "react";
+import React, { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import Checkout from "./Checkout";
-import { GlobalProvider } from "./context/global";
+import App from "src/app";
+import { GlobalProvider } from "src/context/global";
 
 import "../styles/main.scss";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 
 root.render(
-  <GlobalProvider>
-    <Checkout />
-  </GlobalProvider>,
+  <StrictMode>
+    <GlobalProvider>
+      <App />
+    </GlobalProvider>
+  </StrictMode>,
 );
