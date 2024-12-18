@@ -4,6 +4,7 @@ const path = require('path');
 module.exports = {
   mode: "development",
   entry: './src/index.tsx',
+  devtool : 'inline-source-map',
   module: {
     rules: [
       {
@@ -29,6 +30,9 @@ module.exports = {
     path: path.resolve(__dirname, 'public')
   },
   resolve: {
+    alias: {
+      src: path.resolve(__dirname, './src')
+    },
     extensions: ['.tsx', '.ts', '.js']
   },
   plugins: [

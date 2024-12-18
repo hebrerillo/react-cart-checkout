@@ -1,6 +1,6 @@
-import React, { useContext, useRef, useState } from "react";
-import GlobalContext from "../context/global";
-import { AddressFieldset } from "./addressFieldset";
+import React, { useRef, useState } from "react";
+import { useGlobalContext } from "src/context/global";
+import { AddressFieldset } from "src/components/addressFieldset";
 import { fold, unfold } from "../utilities/collapsable";
 
 /**
@@ -11,7 +11,7 @@ function AddressForm() {
   const shippingFieldsetRef = useRef<HTMLFieldSetElement>(null);
   const billingFieldsetRef = useRef<HTMLFieldSetElement>(null);
   const billingBlock = useRef(null);
-  const { scrollToCheckoutElement } = useContext(GlobalContext);
+  const { globalContextManager } = useGlobalContext();
   const [isBillingDisabled, setIsBillingDisabled] = useState(true);
 
   /**
@@ -34,7 +34,9 @@ function AddressForm() {
       const inputElement = element as HTMLInputElement;
       if (!inputElement.checkValidity() && !firstError) {
         firstError = true;
-        scrollToCheckoutElement(inputElement.closest(".form-row"));
+        globalContextManager.scrollToCheckoutElement(
+          inputElement.closest(".form-row"),
+        );
       }
     });
   }

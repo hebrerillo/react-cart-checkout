@@ -57,7 +57,12 @@ function AddressFieldset(props: AddressFieldSetProps) {
       </div>
       <div className="form-row">
         <label>Last name:</label>
-        <input type="text" name={`${props.prefix}_lastName`} required />
+        <input
+          className="form-control"
+          type="text"
+          name={`${props.prefix}_lastName`}
+          required
+        />
         <div className="invalid-feedback">{MANDATORY_FIELD_ERROR_MESSAGE}</div>
       </div>
       {!isBilling && shippingBlock}

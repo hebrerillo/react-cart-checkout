@@ -12,11 +12,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "webpack serve --open",
+    "start": "webpack serve --open --port 8081",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "pretty": "prettier --write src/* src/*/* styles/* styles/*/*"
+    "pretty": "prettier --write src/* src/*/* styles/* styles/*/* php/*.js"
   },
   "eslintConfig": {
     "extends": [
