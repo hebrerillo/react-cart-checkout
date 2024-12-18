@@ -1,17 +1,22 @@
-import React, { createRef } from "react";
+import React, { useRef, useCallback } from "react";
 import { useGlobalContext } from "src/context/global";
 import { Product } from "src/products-list/interface";
+import { ProductItem } from "src/products-list/product-item";
 import { HTTPRequest, RequestParams } from "src/utilities/request";
 
 export class ProductListManager {
   private fetchProductsCallback: Function; //Callback to be executed when the last product is intersecting
   private observer!: IntersectionObserver;
-  private productsRef: Array<React.RefObject<HTMLLIElement>>;
+  private productsRef: React.RefObject<Array<HTMLLIElement>>;
+  private productsRefCallback: Function;
 
   constructor(fetchProductsCallback: Function) {
     this.fetchProductsCallback = fetchProductsCallback;
-    this.productsRef = [];
+    this.productsRef = useRef([]);
     this.initializeObserver();
+    this.productsRefCallback = useCallback((element: HTMLLIElement) => {
+      this.productsRef.current?.push(element);
+    }, []);
   }
 
   private initializeObserver() {
@@ -34,7 +39,7 @@ export class ProductListManager {
   private observerCallback(entries: Array<IntersectionObserverEntry>) {
     entries.forEach((entry: IntersectionObserverEntry) => {
       if (entry.isIntersecting) {
-        if (entry.target === this.productsRef.slice(-1)[0].current) {
+        if (entry.target === this.productsRef.current?.slice(-1)[0]) {
           this.fetchProductsCallback();
         }
       } else {
@@ -71,9 +76,8 @@ export class ProductListManager {
    * Observes the products HTML elements in the list.
    */
   public observeProductsElements() {
-    this.productsRef.forEach(
-      (productRef) =>
-        productRef.current && this.observer?.observe(productRef.current),
+    this.productsRef.current?.forEach(
+      (product) => product && this.observer?.observe(product),
     );
   }
 
@@ -85,23 +89,13 @@ export class ProductListManager {
    * Render the list of products
    */
   public renderList(productList: Array<Product>): React.JSX.Element[] {
-    for (let i = 0; i < productList.length; i++) {
-      this.productsRef.push(createRef<HTMLLIElement>());
-    }
-
-    return productList.map((product, index) => {
+    return productList.map((product) => {
       return (
-        <li
-          className="product__item"
+        <ProductItem
           key={product.id}
-          ref={this.productsRef[index]}
-          data-id={product.id}
-        >
-          <img className="product__item-img" src={product.desktop_url} />
-          <div className="product__description">
-            <h3>{product.name}</h3>
-          </div>
-        </li>
+          product={product as Product}
+          refCallback={this.productsRefCallback.bind(this)}
+        />
       );
     });
   }
