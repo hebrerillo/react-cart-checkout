@@ -34,6 +34,20 @@ export class ProductListManager {
   }
 
   /**
+   * Executed to clean up the product list component
+   */
+  public cleanUp(): void {
+    this.unobserveProductsElements();
+  }
+
+  /**
+   * Executed after the product list has been rendered
+   */
+  public afterRender(): void {
+    this.observeProductsElements();
+  }
+
+  /**
    * Gets executed when items are intersecting
    */
   private observerCallback(entries: Array<IntersectionObserverEntry>) {
@@ -75,13 +89,16 @@ export class ProductListManager {
   /**
    * Observes the products HTML elements in the list.
    */
-  public observeProductsElements() {
+  private observeProductsElements() {
     this.productsRef.current?.forEach(
       (product) => product && this.observer?.observe(product),
     );
   }
 
-  public unobserveProductsElements() {
+  /**
+   * Unobserves the products elements
+   */
+  private unobserveProductsElements() {
     this.observer?.disconnect();
   }
 

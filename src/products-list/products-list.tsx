@@ -16,9 +16,9 @@ function ProductList() {
   }
 
   useEffect(() => {
-    listManager.observeProductsElements();
+    listManager.afterRender();
     return () => {
-      listManager.unobserveProductsElements();
+      listManager.cleanUp();
     };
   });
 
