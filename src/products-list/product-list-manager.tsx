@@ -1,35 +1,74 @@
-import React, { useRef, useCallback } from "react";
+import React from "react";
 import { Product } from "src/products-list/interface";
 import { ProductItem } from "src/products-list/product-item";
 import { HTTPRequest, RequestParams } from "src/utilities/request";
+import { GlobalContextManager } from "src/context/globalContext";
 import { ProductsObserver } from "src/products-list/products-observer";
 
-export class ProductListManager {
-  private productsRef: React.RefObject<Array<HTMLLIElement>>;
-  private productsRefCallback: Function;
-  private productsObserver: ProductsObserver | null;
+export interface ProductsState {
+  list: Array<Product>;
+  updaterFunction: Function;
+  globalContext: GlobalContextManager;
+}
 
-  constructor(fetchProductsCallback: Function) {
+export class ProductListManager {
+  private productsObserver: ProductsObserver | null;
+  private updaterFunction: Function | null;
+  private productList: Array<Product> | null;
+
+  constructor() {
+    this.updaterFunction = null;
     this.productsObserver = null;
-    this.productsRef = useRef([]);
-    this.productsRefCallback = useCallback((element: HTMLLIElement) => {
-      this.productsRef.current?.push(element);
-    }, []);
-    this.productsObserver = new ProductsObserver(fetchProductsCallback);
+    this.productList = null;
   }
 
   /**
-   * Executed to clean up the product list component
+   * Sets the products state variable and updater function.
+   *
+   * @param {ProductsState} state
    */
-  public cleanUp(): void {
-    this.productsObserver?.unobserveProductsElements();
+  public setState(state: ProductsState) {
+    this.productList = state.list;
+    this.updaterFunction = state.updaterFunction;
+    if (!this.productsObserver) {
+      this.productsObserver = new ProductsObserver(this, state.globalContext);
+    }
+  }
+
+  /**
+   * Updates the intersection information of a product.
+   *
+   * @param {string} productId The id of the product.
+   * @param {boolean} intersects Whether the product is intersecting in the view port.
+   */
+  public updateProductIntersection(productId: string, intersects: boolean) {
+    const productResult = this.productList?.find((product: Product) => {
+      return product.id === productId;
+    });
+
+    if (!productResult) {
+      return;
+    }
+
+    productResult.intersects = intersects;
+    this.updateProductList([]);
   }
 
   /**
    * Executed after the product list has been rendered
    */
-  public afterRender(): void {
-    this.productsObserver?.observeProductsElements(this.productsRef?.current ?? []);
+  public afterRender(productsElement: Array<HTMLLIElement>): void {
+    this.productsObserver?.observeProductsElements(productsElement);
+  }
+
+  private updateProductList(newList: Array<Product>) {
+    if (!this.updaterFunction) {
+      return;
+    }
+
+    this.updaterFunction((currentProductList: Array<Product>) => {
+      return [...currentProductList, ...newList];
+    });
   }
 
   /**
@@ -40,6 +79,7 @@ export class ProductListManager {
 
     const successFunc = (resultRequest: Array<Product>) => {
       result = resultRequest;
+      this.updateProductList(result);
     };
 
     const params: RequestParams = {
@@ -54,13 +94,16 @@ export class ProductListManager {
   /**
    * Render the list of products
    */
-  public renderList(productList: Array<Product>): React.JSX.Element[] {
+  public renderList(
+    productList: Array<Product>,
+    productsRefCallback: Function,
+  ): React.JSX.Element[] {
     return productList.map((product) => {
       return (
         <ProductItem
           key={product.id}
-          product={product as Product}
-          refCallback={this.productsRefCallback.bind(this)}
+          product={product}
+          refCallback={productsRefCallback}
         />
       );
     });

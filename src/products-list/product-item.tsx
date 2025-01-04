@@ -7,13 +7,18 @@ export interface ProductItemProps {
 }
 
 export function ProductItem(props: ProductItemProps) {
+  const src = props.product.intersects ? props.product.desktop_url : "";
   return (
     <li
       className="product__item"
       ref={props.refCallback}
       data-id={props.product.id}
     >
-      <img className="product__item-img" src={props.product.desktop_url} />
+      <img
+        className="product__item-img"
+        data-src={props.product.desktop_url}
+        src={src}
+      />
       <div className="product__description">
         <h3>{props.product.name}</h3>
       </div>
