@@ -1,4 +1,5 @@
-import { useGlobalContext } from "src/context/global";
+import { GlobalContextManager } from "src/context/globalContext";
+import { ProductListManager } from "src/products-list/product-list-manager";
 
 /**
  * Utility class to implement an interesection observer in the list of product elements.
@@ -6,17 +7,24 @@ import { useGlobalContext } from "src/context/global";
  */
 export class ProductsObserver {
   private observer!: IntersectionObserver;
-  private fetchProductsCallback: Function; //Callback to be executed when the last product is intersecting
   private observerOptions: IntersectionObserverInit;
+  private listManager: ProductListManager;
 
-  constructor(fetchProductsCallback: Function) {
-    this.fetchProductsCallback = fetchProductsCallback;
-    const { globalContextManager } = useGlobalContext();
+  constructor(
+    listManager: ProductListManager,
+    globalContext: GlobalContextManager,
+  ) {
+    this.listManager = listManager;
     this.observerOptions = {
       root: null,
       threshold: 0,
-      rootMargin: `-${globalContextManager.getSiteHeaderHeight()}px 0px 0px 0px`,
+      rootMargin: `-${globalContext.getSiteHeaderHeight()}px 0px 0px 0px`,
     };
+
+    this.observer = new IntersectionObserver(
+      this.observerCallback.bind(this),
+      this.observerOptions,
+    );
   }
 
   /**
@@ -24,16 +32,14 @@ export class ProductsObserver {
    */
   private observerCallback(entries: Array<IntersectionObserverEntry>) {
     entries.forEach((entry: IntersectionObserverEntry) => {
+      const target = entry.target as HTMLElement;
+      this.listManager.updateProductIntersection(
+        target.dataset.id ?? "",
+        entry.isIntersecting,
+      );
       if (entry.isIntersecting) {
         if (this.isLastProductElement(entry.target as HTMLElement)) {
-          this.fetchProductsCallback();
-        }
-      } else {
-        const domRect = entry.boundingClientRect;
-        if (domRect.top <= 0) {
-          console.log("Hides from the top", entry, domRect.top);
-        } else {
-          console.log("Hides from the bottom", entry, domRect.top);
+          this.listManager.fetchProducts();
         }
       }
     });
@@ -54,11 +60,6 @@ export class ProductsObserver {
    * @param {Array<HTMLLIElement>} productsArray The array of products
    */
   public observeProductsElements(productsArray: Array<HTMLLIElement>) {
-    this.observer = new IntersectionObserver(
-      this.observerCallback.bind(this),
-      this.observerOptions,
-    );
-
     productsArray.forEach(
       (product) => product && this.observer?.observe(product),
     );

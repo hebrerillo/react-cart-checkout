@@ -1,34 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { ProductListManager } from "src/products-list/product-list-manager";
+import React, { useState, useCallback, useEffect, useRef } from "react";
+import {
+  ProductListManager,
+  ProductsState,
+} from "src/products-list/product-list-manager";
 import { Product } from "src/products-list/interface";
+import { useGlobalContext } from "src/context/global";
+
+const listManager = new ProductListManager();
 
 function ProductList() {
+  const { globalContextManager } = useGlobalContext();
+  const productsRef = useRef<Array<HTMLLIElement>>([]);
+  const productsRefCallback = useCallback((element: HTMLLIElement) => {
+    productsRef.current?.push(element);
+  }, []);
+
   const [productList, setProductList] = useState([] as Array<Product>);
-  const listManager = new ProductListManager(fetchProducts);
+  const state = {
+    list: productList,
+    updaterFunction: setProductList,
+    globalContext: globalContextManager,
+  } as ProductsState;
 
-  function updateProductsList(newList: Array<Product>) {
-    setProductList([...productList, ...newList]);
-  }
-
-  async function fetchProducts() {
-    //TODO: quitar el await
-    updateProductsList(await listManager.fetchProducts());
-  }
+  listManager.setState(state);
 
   useEffect(() => {
-    listManager.afterRender();
-    return () => {
-      listManager.cleanUp();
-    };
+    listManager.afterRender(productsRef.current);
   });
 
   useEffect(() => {
-    fetchProducts();
+    listManager.fetchProducts();
   }, []);
 
   return (
     <ul className="product__list site-horizontal-padding">
-      {listManager.renderList(productList)}
+      {listManager.renderList(productList, productsRefCallback)}
     </ul>
   );
 }

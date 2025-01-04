@@ -3,4 +3,5 @@ export interface Product {
   desktop_url: string;
   mobile_url: string;
   name: string;
+  intersects?: boolean;
 }
