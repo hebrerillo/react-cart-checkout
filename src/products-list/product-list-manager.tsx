@@ -42,15 +42,15 @@ export class ProductListManager {
    * @param {boolean} intersects Whether the product is intersecting in the view port.
    */
   public updateProductIntersection(productId: string, intersects: boolean) {
-    const productResult = this.productList?.find((product: Product) => {
-      return product.id === productId;
+    const product = this.productList?.find((productItem: Product) => {
+      return productItem.id === productId;
     });
 
-    if (!productResult) {
+    if (!product || !intersects) {
       return;
     }
 
-    productResult.intersects = intersects;
+    product.intersects = true;
     this.updateProductList([]);
   }
 
