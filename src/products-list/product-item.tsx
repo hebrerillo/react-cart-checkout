@@ -22,6 +22,7 @@ export function ProductItem(props: ProductItemProps) {
       <div className="product__description">
         <h3>{props.product.name}</h3>
       </div>
+      <button className="product__item-add-button">Add</button>
     </li>
   );
 }

@@ -1,9 +1,13 @@
+@use "sass:color";
+
 $black: #000;
 $white: #fff;
 $disabled-grey: #939393;
 $submit-hover: #222;
 $soft-grey: #a6a6a6;
 $invalid-input: #cc0000;
+$button: #929122;
+$button-hover: color.adjust($button, $lightness: 5%);
 
 :root {
   --color-black: #{$black};
@@ -12,4 +16,6 @@ $invalid-input: #cc0000;
   --color-submit-hover: #{$submit-hover};
   --color-soft-grey: #{$soft-grey};
   --color-invalid-input: #{$invalid-input};
+  --color-button: #{$button};
+  --color-button-hover: #{$button-hover};
 }
