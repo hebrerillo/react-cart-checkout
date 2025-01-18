@@ -25,6 +25,9 @@ export class GlobalContextManager {
     );
   }
 
+  /**
+   * @return {number} The height of the site header.
+   */
   public getSiteHeaderHeight(): number {
     return this.siteHeader?.current?.getBoundingClientRect().height ?? 0;
   }

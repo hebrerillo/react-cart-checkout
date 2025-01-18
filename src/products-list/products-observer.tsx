@@ -1,4 +1,4 @@
-import { GlobalContextManager } from "src/context/globalContext";
+import { GlobalContextManager } from "src/global/globalContext";
 import { ProductListManager } from "src/products-list/product-list-manager";
 
 /**

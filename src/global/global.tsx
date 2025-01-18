@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { GlobalContextManager } from "src/context/globalContext";
+import { GlobalContextManager } from "src/global/globalContext";
 
 interface GlobalContextType {
   globalContextManager: GlobalContextManager;

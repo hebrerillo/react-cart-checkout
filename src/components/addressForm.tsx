@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useGlobalContext } from "src/context/global";
+import { useGlobalContext } from "src/global/global";
 import { AddressFieldset } from "src/components/addressFieldset";
 import { fold, unfold } from "../utilities/collapsable";
 

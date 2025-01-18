@@ -4,7 +4,7 @@ import {
   ProductsState,
 } from "src/products-list/product-list-manager";
 import { Product } from "src/products-list/interface";
-import { useGlobalContext } from "src/context/global";
+import { useGlobalContext } from "src/global/global";
 
 const listManager = new ProductListManager();
 

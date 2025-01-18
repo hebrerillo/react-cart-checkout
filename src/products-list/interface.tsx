@@ -4,4 +4,5 @@ export interface Product {
   mobile_url: string;
   name: string;
   intersects?: boolean;
+  amount: number;
 }
