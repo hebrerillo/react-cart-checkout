@@ -27,6 +27,7 @@ function getCarsList() {
       name: "renault",
       mobile_url: "http://localhost/original.jpg?id=" + id + "&mobile",
       desktop_url: "http://localhost/original.jpg?id=" + id + "&desktop",
+      price: Math.floor(Math.random() * 100000),
     };
     output.push(obj);
   }

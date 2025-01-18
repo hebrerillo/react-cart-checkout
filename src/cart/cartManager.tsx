@@ -81,4 +81,13 @@ export class CartManager {
       return newList;
     });
   }
+
+  public getTotalPrice(): number {
+    let totalPrice = 0;
+    this.productCartList?.forEach((product) => {
+      totalPrice += product.price * product.amount;
+    });
+
+    return totalPrice;
+  }
 }

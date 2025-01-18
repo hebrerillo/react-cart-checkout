@@ -41,6 +41,7 @@ function CartModalContent() {
   return (
     <div className={`cart-modal ${visibleModifier}`}>
       <ul>{productList}</ul>
+      <span>Total price: {cartContextManager.getTotalPrice()}</span>
       <p></p>
       <span onClick={cartModalManager.hide.bind(cartModalManager)}>Close</span>
     </div>
