@@ -2,7 +2,7 @@ import React from "react";
 import { Product } from "src/products-list/interface";
 import { ProductItem } from "src/products-list/product-item";
 import { HTTPRequest, RequestParams } from "src/utilities/request";
-import { GlobalContextManager } from "src/context/globalContext";
+import { GlobalContextManager } from "src/global/globalContext";
 import { ProductsObserver } from "src/products-list/products-observer";
 
 export interface ProductsState {

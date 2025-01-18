@@ -1,5 +1,6 @@
 import React from "react";
 import { Product } from "src/products-list/interface";
+import { useCartContext } from "src/cart/cartContext";
 
 export interface ProductItemProps {
   product: Product;
@@ -8,6 +9,13 @@ export interface ProductItemProps {
 
 export function ProductItem(props: ProductItemProps) {
   const src = props.product.intersects ? props.product.desktop_url : "";
+  const { cartContextManager } = useCartContext();
+
+  const addProductToCart = cartContextManager.addProduct.bind(
+    cartContextManager,
+    props.product,
+  );
+
   return (
     <li
       className="product__item"
@@ -22,7 +30,9 @@ export function ProductItem(props: ProductItemProps) {
       <div className="product__description">
         <h3>{props.product.name}</h3>
       </div>
-      <button className="product__item-add-button">Add</button>
+      <button className="product__item-add-button" onClick={addProductToCart}>
+        Add
+      </button>
     </li>
   );
 }
