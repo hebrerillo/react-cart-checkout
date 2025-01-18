@@ -24,12 +24,12 @@ export class CartManager {
     return this.cartModalManager;
   }
 
-  public setState(state: ContextCartState) {
+  public setState(state: ContextCartState): void {
     this.productCartList = state.list;
     this.updaterFunction = state.updaterFunction;
   }
 
-  public getList() {
+  public getList(): Array<Product> | null {
     return this.productCartList;
   }
 
@@ -38,25 +38,46 @@ export class CartManager {
    *
    * @param {Product} product
    */
-  public addProduct(product: Product) {
-    if (!this.updaterFunction) {
+  public addProduct(product: Product): void {
+    if (!this.updaterFunction || !this.productCartList) {
       return;
     }
 
-    const productFound = !!this.productCartList?.find(
+    const productFound = !!this.productCartList.find(
       (productItem) => productItem.id === product.id,
     );
 
+    let newList = [] as Array<Product>;
     if (productFound) {
       product.amount++;
+      newList = [...this.productCartList];
     } else {
       product.amount = 1;
+      newList = [...this.productCartList, product];
     }
 
-    this.updaterFunction((currentList: Array<Product>) => {
-      const newList = productFound
-        ? [...currentList]
-        : [...currentList, product];
+    this.updaterFunction(() => {
+      return newList;
+    });
+  }
+
+  public decreaseProduct(product: Product): void {
+    if (!this.updaterFunction || !this.productCartList) {
+      return;
+    }
+
+    let newList = [] as Array<Product>;
+    product.amount--;
+
+    if (product.amount === 0) {
+      newList = this.productCartList?.filter((productItem) => {
+        return product !== productItem;
+      });
+    } else {
+      newList = [...this.productCartList];
+    }
+
+    this.updaterFunction(() => {
       return newList;
     });
   }

@@ -11,6 +11,22 @@ function CartModalContent() {
     return (
       <li key={product.id}>
         {product.name} x{product.amount}
+        <span
+          onClick={cartContextManager.addProduct.bind(
+            cartContextManager,
+            product,
+          )}
+        >
+          Increase
+        </span>
+        <span
+          onClick={cartContextManager.decreaseProduct.bind(
+            cartContextManager,
+            product,
+          )}
+        >
+          Decrease
+        </span>
       </li>
     );
   });
