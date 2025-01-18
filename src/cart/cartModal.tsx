@@ -7,6 +7,14 @@ function CartModalContent() {
   const { cartContextManager } = useCartContext();
   const cartModalManager = cartContextManager.getModalManager();
 
+  const productList = cartContextManager.getList()?.map((product) => {
+    return (
+      <li key={product.id}>
+        {product.name} x{product.amount}
+      </li>
+    );
+  });
+
   const state = {
     updaterFunction: setIsVisible,
     isVisible: isVisible,
@@ -16,6 +24,7 @@ function CartModalContent() {
   const visibleModifier = isVisible ? "cart-modal--show" : "";
   return (
     <div className={`cart-modal ${visibleModifier}`}>
+      <ul>{productList}</ul>
       <p></p>
       <span onClick={cartModalManager.hide.bind(cartModalManager)}>Close</span>
     </div>

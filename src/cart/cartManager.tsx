@@ -43,20 +43,21 @@ export class CartManager {
       return;
     }
 
-    const productFound = this.productCartList?.find(
+    const productFound = !!this.productCartList?.find(
       (productItem) => productItem.id === product.id,
     );
-    if (productFound !== undefined) {
-      productFound.amount++;
-      this.updaterFunction((currentList: Array<Product>) => {
-        return [...currentList];
-      });
-      return;
+
+    if (productFound) {
+      product.amount++;
+    } else {
+      product.amount = 1;
     }
 
-    product.amount = 1;
     this.updaterFunction((currentList: Array<Product>) => {
-      return [...currentList, product];
+      const newList = productFound
+        ? [...currentList]
+        : [...currentList, product];
+      return newList;
     });
   }
 }
