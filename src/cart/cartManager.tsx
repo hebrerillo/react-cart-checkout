@@ -9,7 +9,7 @@ export interface ContextCartState {
 /**
  * Helper class to manage the products items in the cart
  */
-export class CartContextManager {
+export class CartManager {
   private updaterFunction: Function | null;
   private productCartList: Array<Product> | null;
   private cartModalManager: CartModalManager;

@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useState } from "react";
-import { CartContextManager, ContextCartState } from "src/cart/cartManager";
+import { CartManager, ContextCartState } from "src/cart/cartManager";
 import { Product } from "src/products-list/interface";
 
 interface CartContextType {
-  cartContextManager: CartContextManager;
+  cartContextManager: CartManager;
 }
 
 const CartContext = createContext({} as CartContextType);
-const cartContextManager = new CartContextManager();
+const cartContextManager = new CartManager();
 
 function CartProvider({ children }: { children: React.ReactNode }) {
   const [productCartList, setProductCartList] = useState([] as Array<Product>);
