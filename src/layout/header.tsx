@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useGlobalContext } from "src/global/global";
-import { CartModal } from "src/cart/cartModal";
+import { CartModal } from "src/layout/cart/cartModal";
 import { useCartContext } from "src/cart/cartContext";
 
 function Header() {
