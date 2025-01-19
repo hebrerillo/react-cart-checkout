@@ -17,9 +17,9 @@ function Header() {
         <img src="/img/logo.svg" />
       </a>
       <CartModal />
-      <div onClick={cartModalManager.show.bind(cartModalManager)}>
-        open cart
-      </div>
+      <span className="site-header__cart-icon" onClick={cartModalManager.show.bind(cartModalManager)}>
+        <img src="/img/cart-icon.svg" />
+      </span>
     </header>
   );
 }

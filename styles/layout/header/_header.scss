@@ -22,6 +22,14 @@
     }
   }
 
+  &__cart-icon {
+    cursor: pointer;
+    justify-self: end;
+    img {
+      width: 3.5rem;
+    }
+  }
+
   &__left-arrow,
   &__logo {
     cursor: pointer;
