@@ -17,7 +17,10 @@ function Header() {
         <img src="/img/logo.svg" />
       </a>
       <CartModal />
-      <span className="site-header__cart-icon" onClick={cartModalManager.show.bind(cartModalManager)}>
+      <span
+        className="site-header__cart-icon"
+        onClick={cartModalManager.show.bind(cartModalManager)}
+      >
         <img src="/img/cart-icon.svg" />
       </span>
     </header>

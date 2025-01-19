@@ -37,13 +37,20 @@ function CartModalContent() {
   };
   cartModalManager.setState(state);
 
-  const visibleModifier = isVisible ? "cart-modal--show" : "";
+  const visibleModifier = isVisible ? "modal-wrapper--show" : "";
   return (
-    <div className={`cart-modal ${visibleModifier}`}>
-      <ul>{productList}</ul>
-      <span>Total price: {cartContextManager.getTotalPrice()}</span>
-      <p></p>
-      <span onClick={cartModalManager.hide.bind(cartModalManager)}>Close</span>
+    <div className={`modal-wrapper ${visibleModifier}`}>
+      <div className={`cart-modal`}>
+        <div className="cart-modal__header">
+          <h3 className="cart-modal__header-title">order</h3>
+          <span
+            className="close-icon"
+            onClick={cartModalManager.hide.bind(cartModalManager)}
+          ></span>
+        </div>
+        <ul>{productList}</ul>
+        <span>Total price: {cartContextManager.getTotalPrice()}</span>
+      </div>
     </div>
   );
 }
