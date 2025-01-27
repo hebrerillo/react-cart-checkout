@@ -5,8 +5,8 @@ import { useCartContext } from "src/cart/cartContext";
 
 function CartModalContent() {
   const [isVisible, setIsVisible] = useState(false);
-  const { cartContextManager } = useCartContext();
-  const cartModalManager = cartContextManager.getModalManager();
+  const { cartManager } = useCartContext();
+  const cartModalManager = cartManager.getModalManager();
 
   const state = {
     updaterFunction: setIsVisible,

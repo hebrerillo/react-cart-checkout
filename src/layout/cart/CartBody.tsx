@@ -4,12 +4,12 @@ import { ProductList } from "src/layout/cart/ProductList";
 import { useCartContext } from "src/cart/cartContext";
 
 function CartBody() {
-  const { cartContextManager } = useCartContext();
+  const { cartManager } = useCartContext();
   return (
     <div>
       {" "}
-      {!cartContextManager.isEmpty() ? (
-        <ProductList cartManager={cartContextManager} />
+      {!cartManager.isEmpty() ? (
+        <ProductList cartManager={cartManager} />
       ) : (
         <EmptyCartMessage />
       )}

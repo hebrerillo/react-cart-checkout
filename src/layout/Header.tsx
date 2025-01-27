@@ -5,9 +5,9 @@ import { useCartContext } from "src/cart/cartContext";
 
 function Header() {
   const { globalContextManager } = useGlobalContext();
-  const { cartContextManager } = useCartContext();
+  const { cartManager } = useCartContext();
   const header = useRef<HTMLElement>(null);
-  const cartModalManager = cartContextManager.getModalManager();
+  const cartModalManager = cartManager.getModalManager();
   globalContextManager.setSiteHeader(header);
 
   return (

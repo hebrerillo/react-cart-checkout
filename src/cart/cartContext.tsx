@@ -3,11 +3,11 @@ import { CartManager, ContextCartState } from "src/cart/cartManager";
 import { Product } from "src/products-list/interface";
 
 interface CartContextType {
-  cartContextManager: CartManager;
+  cartManager: CartManager;
 }
 
 const CartContext = createContext({} as CartContextType);
-const cartContextManager = new CartManager();
+const cartManager = new CartManager();
 
 function CartProvider({ children }: { children: React.ReactNode }) {
   const [productCartList, setProductCartList] = useState([] as Array<Product>);
@@ -16,10 +16,10 @@ function CartProvider({ children }: { children: React.ReactNode }) {
     updaterFunction: setProductCartList,
   } as ContextCartState;
 
-  cartContextManager.setState(state);
+  cartManager.setState(state);
 
   return (
-    <CartContext.Provider value={{ cartContextManager }}>
+    <CartContext.Provider value={{ cartManager }}>
       {children}
     </CartContext.Provider>
   );

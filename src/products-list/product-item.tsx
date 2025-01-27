@@ -9,10 +9,10 @@ export interface ProductItemProps {
 
 export function ProductItem(props: ProductItemProps) {
   const src = props.product.intersects ? props.product.desktop_url : "";
-  const { cartContextManager } = useCartContext();
+  const { cartManager } = useCartContext();
 
-  const addProductToCart = cartContextManager.addProduct.bind(
-    cartContextManager,
+  const addProductToCart = cartManager.addProduct.bind(
+    cartManager,
     props.product,
   );
 
