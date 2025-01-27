@@ -8,24 +8,28 @@ interface ProductListLayoutProps {
 function ProductList(props: ProductListLayoutProps) {
   const productList = props.cartManager.getList().map((product) => {
     return (
-      <li key={product.id}>
+      <li className="cart-modal__item-product" key={product.id}>
         {product.name} x{product.amount}
-        <span
-          onClick={props.cartManager.addProduct.bind(
-            props.cartManager,
-            product,
-          )}
-        >
-          Increase
-        </span>
-        <span
-          onClick={props.cartManager.decreaseProduct.bind(
-            props.cartManager,
-            product,
-          )}
-        >
-          Decrease
-        </span>
+        <div className="cart-modal__amount-control-wrapper">
+          <span
+            className="cart-modal__amount-control"
+            onClick={props.cartManager.addProduct.bind(
+              props.cartManager,
+              product,
+            )}
+          >
+            +
+          </span>
+          <span
+            className="cart-modal__amount-control"
+            onClick={props.cartManager.decreaseProduct.bind(
+              props.cartManager,
+              product,
+            )}
+          >
+            -
+          </span>
+        </div>
       </li>
     );
   });
