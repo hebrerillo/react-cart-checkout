@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { CartBody } from "src/layout/cart/CartBody";
+import { CartHeader } from "src/layout/cart/CartHeader";
 import { useCartContext } from "src/cart/cartContext";
 
 function CartModalContent() {
@@ -19,13 +20,7 @@ function CartModalContent() {
   return (
     <div className={`modal-wrapper ${visibleModifier}`}>
       <div className={`cart-modal`}>
-        <div className="cart-modal__header">
-          <h3 className="cart-modal__header-title">order</h3>
-          <span
-            className="close-icon"
-            onClick={cartModalManager.hide.bind(cartModalManager)}
-          ></span>
-        </div>
+        <CartHeader cartModalManager={cartModalManager} />
         <CartBody />
       </div>
     </div>

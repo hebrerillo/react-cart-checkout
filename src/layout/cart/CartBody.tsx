@@ -7,7 +7,6 @@ function CartBody() {
   const { cartManager } = useCartContext();
   return (
     <div>
-      {" "}
       {!cartManager.isEmpty() ? (
         <ProductList cartManager={cartManager} />
       ) : (
