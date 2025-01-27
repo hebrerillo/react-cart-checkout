@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
-import { CartBody } from "src/layout/cart/cartBody";
+import { CartBody } from "src/layout/cart/CartBody";
 import { useCartContext } from "src/cart/cartContext";
 
 function CartModalContent() {

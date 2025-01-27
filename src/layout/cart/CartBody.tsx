@@ -1,5 +1,5 @@
 import React from "react";
-import { EmptyCartMessage } from "src/layout/cart/emptyMessage";
+import { EmptyCartMessage } from "src/layout/cart/EmptyMessage";
 import { ProductList } from "src/layout/cart/ProductList";
 import { useCartContext } from "src/cart/cartContext";
 

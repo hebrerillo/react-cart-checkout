@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "src/layout/header";
+import Header from "src/layout/Header";
 import { ProductList } from "src/products-list/products-list";
 
 function App() {
