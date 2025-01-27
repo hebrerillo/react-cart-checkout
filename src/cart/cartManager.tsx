@@ -11,12 +11,12 @@ export interface ContextCartState {
  */
 export class CartManager {
   private updaterFunction: Function | null;
-  private productCartList: Array<Product> | null;
+  private productCartList: Array<Product>;
   private cartModalManager: CartModalManager;
 
   constructor() {
     this.cartModalManager = new CartModalManager();
-    this.productCartList = null;
+    this.productCartList = [];
     this.updaterFunction = null;
   }
 
@@ -29,8 +29,15 @@ export class CartManager {
     this.updaterFunction = state.updaterFunction;
   }
 
-  public getList(): Array<Product> | null {
+  public getList(): Array<Product> {
     return this.productCartList;
+  }
+
+  /**
+   * @return {boolean} true if the cart has no products, false otherwise.
+   */
+  public isEmpty(): boolean {
+    return this.productCartList.length === 0;
   }
 
   /**
