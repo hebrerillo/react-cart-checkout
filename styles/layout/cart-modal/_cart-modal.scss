@@ -63,4 +63,13 @@
       width: 2.6rem;
     }
   }
+
+  &__item-picture {
+    height: 100%;
+    img {
+      object-fit: cover;
+      height: 100%;
+      aspect-ratio: 1;
+    }
+  }
 }
