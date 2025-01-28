@@ -7,11 +7,12 @@ function CartBody() {
   const { cartManager } = useCartContext();
   return (
     <div>
-      {!cartManager.isEmpty() ? (
+      <div className={cartManager.isEmpty() ? "d-none" : ""}>
         <ProductList cartManager={cartManager} />
-      ) : (
+      </div>
+      <div className={!cartManager.isEmpty() ? "d-none" : ""}>
         <EmptyCartMessage />
-      )}
+      </div>
     </div>
   );
 }
