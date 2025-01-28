@@ -27,11 +27,6 @@
   &__item-product {
     display: flex;
     align-items: center;
-    padding: 0.5rem 0;
-    height: 9.5rem;
-    @include large-up {
-      height: 7.5rem;
-    }
   }
 
   &__amount-control-wrapper {
@@ -65,11 +60,13 @@
   }
 
   &__item-picture {
-    height: 100%;
     img {
       object-fit: cover;
-      height: 100%;
       aspect-ratio: 1;
+      height: 9.5rem;
+      @include large-up {
+        height: 7.5rem;
+      }
     }
   }
 }
