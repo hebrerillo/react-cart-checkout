@@ -4,7 +4,7 @@ import { useCartContext } from "src/cart/cartContext";
 
 export interface ProductItemProps {
   product: Product;
-  refCallback: any;
+  refCallback: React.LegacyRef<HTMLLIElement>;
 }
 
 export function ProductItem(props: ProductItemProps) {

@@ -96,7 +96,7 @@ export class ProductListManager {
    */
   public renderList(
     productList: Array<Product>,
-    productsRefCallback: Function,
+    productsRefCallback: React.LegacyRef<HTMLLIElement>,
   ): React.JSX.Element[] {
     return productList.map((product) => {
       return (
