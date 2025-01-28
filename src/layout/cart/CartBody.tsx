@@ -7,10 +7,14 @@ function CartBody() {
   const { cartManager } = useCartContext();
   return (
     <div>
-      <div className={cartManager.isEmpty() ? "d-none" : ""}>
+      <div
+        className={`fadeable ${cartManager.isEmpty() ? "fade-in" : "fade-out"}`}
+      >
         <ProductList cartManager={cartManager} />
       </div>
-      <div className={!cartManager.isEmpty() ? "d-none" : ""}>
+      <div
+        className={`fadeable ${!cartManager.isEmpty() ? "fade-in" : "fade-out"}`}
+      >
         <EmptyCartMessage />
       </div>
     </div>
