@@ -36,17 +36,17 @@ export class ProductListManager {
   }
 
   /**
-   * Updates the intersection information of a product.
+   * Updates the intersection information of a product and updates the products list.
    *
-   * @param {string} productId The id of the product.
-   * @param {boolean} intersects Whether the product is intersecting in the view port.
+   * @param {string} productId
+   *                 The id of the product that is intersecting in the viewport.
    */
-  public updateProductIntersection(productId: string, intersects: boolean) {
+  public productIntersects(productId: string) {
     const product = this.productList?.find((productItem: Product) => {
       return productItem.id === productId;
     });
 
-    if (!product || !intersects) {
+    if (!product) {
       return;
     }
 
@@ -61,6 +61,12 @@ export class ProductListManager {
     this.productsObserver?.observeProductsElements(productsElement);
   }
 
+  /**
+   * Executes the updater function with the new products
+   *
+   * @param {Array<Product>} newList
+   *        The new products to add
+   */
   private updateProductList(newList: Array<Product>) {
     if (!this.updaterFunction) {
       return;
@@ -75,20 +81,22 @@ export class ProductListManager {
    * Performs an asynchronous request to fetch products
    */
   public async fetchProducts() {
-    let result = [] as Array<Product>;
-
-    const successFunc = (resultRequest: Array<Product>) => {
-      result = resultRequest;
-      this.updateProductList(result);
-    };
-
     const params: RequestParams = {
       url: "http://localhost:8082/carslist",
-      successFunc: successFunc,
+      successFunc: this.fetchProductsSuccessCallback.bind(this),
     };
 
     await HTTPRequest.performRequest(params);
-    return result;
+  }
+
+  /**
+   * Callback executed after a successful retrieval of products from the server.
+   *
+   * @param {Array<Product>}
+   *        The array of products retrieved from the server.
+   */
+  private fetchProductsSuccessCallback(resultRequest: Array<Product>) {
+    this.updateProductList(resultRequest);
   }
 
   /**
