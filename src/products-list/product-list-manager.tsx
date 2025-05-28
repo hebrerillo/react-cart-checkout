@@ -1,5 +1,5 @@
 import React from "react";
-import { Product } from "src/products-list/interface";
+import { Product } from "src/products-list/product-interface";
 import { ProductItem } from "src/products-list/product-item";
 import { HTTPRequest, RequestParams } from "src/utilities/request";
 import { GlobalContextManager } from "src/global/globalContext";

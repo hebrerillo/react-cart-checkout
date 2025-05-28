@@ -1,5 +1,5 @@
 import React from "react";
-import { Product } from "src/products-list/interface";
+import { Product } from "src/products-list/product-interface";
 import { useCartContext } from "src/cart/cartContext";
 
 export interface ProductItemProps {
