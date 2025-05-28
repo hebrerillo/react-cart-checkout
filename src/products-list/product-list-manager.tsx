@@ -50,7 +50,7 @@ export class ProductListManager {
       return;
     }
 
-    product.intersects = true;
+    product.has_intersected = true;
     this.updateProductList([]);
   }
 

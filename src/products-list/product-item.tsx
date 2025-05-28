@@ -8,7 +8,7 @@ export interface ProductItemProps {
 }
 
 export function ProductItem(props: ProductItemProps) {
-  const src = props.product.intersects ? props.product.desktop_url : "";
+  const src = props.product.has_intersected ? props.product.desktop_url : "";
   const { cartContextManager } = useCartContext();
 
   const addProductToCart = cartContextManager.addProduct.bind(
