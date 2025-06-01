@@ -1,6 +1,7 @@
 import React from "react";
 import { Product } from "src/products-list/interface";
 import { useCartContext } from "src/cart/cartContext";
+import { ProductPicture } from "./product-item-picture";
 
 export interface ProductItemProps {
   product: Product;
@@ -22,6 +23,7 @@ export function ProductItem(props: ProductItemProps) {
       ref={props.refCallback}
       data-id={props.product.id}
     >
+      <ProductPicture />
       <img
         className="product__item-img"
         data-src={props.product.desktop_url}
