@@ -3,6 +3,10 @@
     position: relative;
     width: 250px;
     height: 90px;
+
+    svg {
+      @include absolute-center;
+    }
   }
 
   &-picture,
