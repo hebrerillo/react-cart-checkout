@@ -9,7 +9,6 @@ export interface ProductItemProps {
 }
 
 export function ProductItem(props: ProductItemProps) {
-  const src = props.product.intersects ? props.product.desktop_url : "";
   const { cartContextManager } = useCartContext();
 
   const addProductToCart = cartContextManager.addProduct.bind(
@@ -23,12 +22,7 @@ export function ProductItem(props: ProductItemProps) {
       ref={props.refCallback}
       data-id={props.product.id}
     >
-      <ProductPicture />
-      <img
-        className="product__item-img"
-        data-src={props.product.desktop_url}
-        src={src}
-      />
+      <ProductPicture product={props.product} />
       <div className="product__description">
         <h3>{props.product.name}</h3>
       </div>
