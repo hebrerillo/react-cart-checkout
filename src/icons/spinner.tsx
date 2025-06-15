@@ -1,6 +1,6 @@
 import React from "react";
 
-function Spiner() {
+function Spinner() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -32,4 +32,4 @@ function Spiner() {
   );
 }
 
-export { Spiner };
+export { Spinner };

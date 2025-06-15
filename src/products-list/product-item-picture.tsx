@@ -7,9 +7,13 @@ interface ProductPictureProps {
 
 export function ProductPicture(props: ProductPictureProps) {
   const src = props.product.intersects ? props.product.desktop_url : "";
+  const alt = props.product.name;
+
   return (
-    <picture className="product__item-picture">
-      <img data-src={props.product.desktop_url} src={src} />
-    </picture>
+    <div className="product__item-picture-container">
+      <picture className="product__item-picture">
+        <img data-src={props.product.desktop_url} src={src} alt={alt} />
+      </picture>
+    </div>
   );
 }
