@@ -8,12 +8,8 @@ interface ProductPictureProps {
 export function ProductPicture(props: ProductPictureProps) {
   const src = props.product.intersects ? props.product.desktop_url : "";
   return (
-    <picture>
-      <img
-        className="product__item-img"
-        data-src={props.product.desktop_url}
-        src={src}
-      />
+    <picture className="product__item-picture">
+      <img data-src={props.product.desktop_url} src={src} />
     </picture>
   );
 }
