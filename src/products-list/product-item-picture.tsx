@@ -8,6 +8,20 @@ interface ProductPictureProps {
 
 const SPINNER_TIMEOUT = 150; //The timeout, in milliseconds, to show the spinner once the image intersects.
 
+/**
+ * Clears the timeout triggered to show the spinner
+ *
+ * @param timeoutRef The reference object holding the timeout
+ */
+function clearSpinnerTimeout(timeoutRef: React.MutableRefObject<number>){
+  if (!timeoutRef || !timeoutRef.current) {
+    return;
+  }
+
+  window.clearTimeout(timeoutRef.current);
+  timeoutRef.current = -1;
+}
+
 export function ProductPicture(props: ProductPictureProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
@@ -25,11 +39,10 @@ export function ProductPicture(props: ProductPictureProps) {
     intersects &&
     imageElement &&
     !isLoaded &&
-    timeoutSpinnerId.current === -1
+    timeoutSpinnerId.current === null
   ) {
     imageElement.addEventListener("load", () => {
-      window.clearTimeout(timeoutSpinnerId.current);
-      timeoutSpinnerId.current = -1;
+      clearSpinnerTimeout(timeoutSpinnerId);
       setIsLoaded(true);
     });
 
