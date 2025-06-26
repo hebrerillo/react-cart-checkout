@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Product } from "src/products-list/interface";
 import { Spinner } from "src/icons/spinner";
 
@@ -7,30 +7,27 @@ interface ProductPictureProps {
 }
 
 export function ProductPicture(props: ProductPictureProps) {
-  const src = props.product.intersects ? props.product.desktop_url : "";
-  const alt = props.product.name;
-  const imgRef = useRef<HTMLImageElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const timeoutIdRef = useRef(-1);
+  const imgRef = useRef<HTMLImageElement>(null);
 
-  useEffect(() => {
-    const imageElement = imgRef?.current;
-    imageElement?.addEventListener("load", (event) => {
-      console.log("image loaded", event, imageElement?.complete);
-      window.clearTimeout(timeoutIdRef.current);
+  const intersects = props.product.intersects;
+  const src = intersects ? props.product.desktop_url : "";
+  const alt = props.product.name;
+  const imageElement = imgRef.current;
+
+  let spinnerJsx = <Spinner />;
+
+  if (imageElement && !isLoaded) {
+    imageElement.addEventListener("load", () => {
       setIsLoaded(true);
     });
-  }, []);
-
-  if (!isLoaded) {
-    timeoutIdRef.current = window.setTimeout(() => {
-      
-    }, 2000);
+  } else if (isLoaded) {
+    spinnerJsx = <></>;
   }
 
   return (
     <div className="product__item-picture-container">
-      <Spinner />
+      {spinnerJsx}
       <picture className="product__item-picture">
         <img
           data-src={props.product.desktop_url}
