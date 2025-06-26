@@ -6,23 +6,36 @@ interface ProductPictureProps {
   product: Product;
 }
 
+const SPINNER_TIMEOUT = 150; //The timeout, in milliseconds, to show the spinner once the image intersects.
+
 export function ProductPicture(props: ProductPictureProps) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
+  const timeoutSpinnerId = useRef<number>(-1);
 
   const intersects = props.product.intersects;
   const src = intersects ? props.product.desktop_url : "";
   const alt = props.product.name;
   const imageElement = imgRef.current;
 
-  let spinnerJsx = <Spinner />;
+  let spinnerJsx = showSpinner && !isLoaded ? <Spinner /> : <></>;
 
-  if (imageElement && !isLoaded) {
+  if (
+    intersects &&
+    imageElement &&
+    !isLoaded &&
+    timeoutSpinnerId.current === -1
+  ) {
     imageElement.addEventListener("load", () => {
+      window.clearTimeout(timeoutSpinnerId.current);
+      timeoutSpinnerId.current = -1;
       setIsLoaded(true);
     });
-  } else if (isLoaded) {
-    spinnerJsx = <></>;
+
+    timeoutSpinnerId.current = window.setTimeout(() => {
+      setShowSpinner(true);
+    }, SPINNER_TIMEOUT);
   }
 
   return (
