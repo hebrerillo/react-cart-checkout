@@ -1,7 +1,7 @@
 import React from "react";
 import { Product } from "src/products-list/interface";
 import { ProductItem } from "src/products-list/product-item";
-import { HTTPRequest, RequestParams } from "src/utilities/request";
+import { HTTPRequest, RequestParams, MockRequest } from "src/utilities/request";
 import { GlobalContextManager } from "src/global/globalContext";
 import { ProductsObserver } from "src/products-list/products-observer";
 
@@ -86,7 +86,30 @@ export class ProductListManager {
       successFunc: this.fetchProductsSuccessCallback.bind(this),
     };
 
+    params.mock = {} as MockRequest;
+    params.mock.timeout = 333;
+    params.mock.shouldFail = false;
+    params.mock.result = this.getMockResult();
+
     await HTTPRequest.performRequest(params);
+  }
+
+  /**
+   * @returns An array of mocking products.
+   */
+  private getMockResult(): Array<Product> {
+    let output = [];
+    for (let i = 0; i < 10; i++) {
+      const id = Math.floor(Math.random() * 100000);
+      let obj = {
+        id: `${id}`,
+        name: "renault",
+        mobile_url: "http://localhost/original.jpg?id=" + id + "&mobile",
+        desktop_url: "http://localhost/original.jpg?id=" + id + "&desktop",
+      } as Product;
+      output.push(obj);
+    }
+    return output;
   }
 
   /**
