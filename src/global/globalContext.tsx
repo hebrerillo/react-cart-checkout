@@ -1,12 +1,7 @@
-import { useRef } from "react";
 import { CheckoutUtils } from "src/utilities/utils";
 
 export class GlobalContextManager {
-  private siteHeader: React.RefObject<HTMLElement> | null;
-
-  constructor() {
-    this.siteHeader = useRef<HTMLElement>(null);
-  }
+  private siteHeader!: React.RefObject<HTMLElement> | null;
 
   public setSiteHeader(siteHeader: React.RefObject<HTMLElement>) {
     this.siteHeader = siteHeader;

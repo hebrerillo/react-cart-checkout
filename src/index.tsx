@@ -4,7 +4,7 @@ import App from "src/app";
 import { GlobalProvider } from "src/global/global";
 import { CartProvider } from "src/cart/cartContext";
 
-import "../styles/main.scss";
+import "./styles/main.scss";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 
