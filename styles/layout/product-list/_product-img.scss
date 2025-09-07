@@ -1,0 +1,22 @@
+.product__list .product__item {
+  &-picture-container {
+    position: relative;
+    width: 250px;
+    height: 90px;
+
+    svg {
+      @include absolute-center;
+    }
+  }
+
+  &-picture,
+  &-picture img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  &-picture img {
+    object-fit: cover;
+  }
+}
