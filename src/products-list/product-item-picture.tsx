@@ -2,11 +2,18 @@ import React, { useRef, useState } from "react";
 import { Product } from "src/products-list/interface";
 import { Spinner } from "src/icons/spinner";
 
+enum PICTURE_STATE {
+  CREATED,
+  LOADING,
+  SLOW_LOADING /* Image is taking too much to load*/,
+  LOADED,
+}
+
 interface ProductPictureProps {
   product: Product;
 }
 
-const SPINNER_TIMEOUT = 1200; //The timeout, in milliseconds, to show the spinner once the image intersects.
+const SPINNER_TIMEOUT = 1500; //The timeout, in milliseconds, to show the spinner once the image intersects.
 
 /**
  * Clears the timeout triggered to show the spinner
@@ -23,31 +30,30 @@ function clearSpinnerTimeout(timeoutRef: React.MutableRefObject<number>) {
 }
 
 export function ProductPicture(props: ProductPictureProps) {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [showSpinner, setShowSpinner] = useState(false);
+  const [pictureState, setPictureState] = useState<PICTURE_STATE>(
+    PICTURE_STATE.CREATED,
+  );
   const imgRef = useRef<HTMLImageElement>(null);
   const timeoutSpinnerId = useRef<number>(-1);
+  const src = useRef<string>("");
 
   const intersects = props.product.intersects;
-  const src = intersects ? props.product.desktop_url : "";
   const alt = props.product.name;
-  const imageElement = imgRef.current;
 
-  let spinnerJSX = showSpinner && !isLoaded ? <Spinner /> : <></>;
+  let spinnerJSX =
+    pictureState === PICTURE_STATE.SLOW_LOADING ? <Spinner /> : <></>;
 
-  if (
-    intersects &&
-    imageElement &&
-    !isLoaded &&
-    timeoutSpinnerId.current === -1
-  ) {
-    imageElement.addEventListener("load", () => {
+  if (intersects && pictureState === PICTURE_STATE.CREATED) {
+    src.current = props.product.desktop_url;
+    setPictureState(PICTURE_STATE.LOADING);
+
+    imgRef.current?.addEventListener("load", () => {
       clearSpinnerTimeout(timeoutSpinnerId);
-      setIsLoaded(true);
+      setPictureState(PICTURE_STATE.LOADED);
     });
 
     timeoutSpinnerId.current = window.setTimeout(() => {
-      setShowSpinner(true);
+      setPictureState(PICTURE_STATE.SLOW_LOADING);
     }, SPINNER_TIMEOUT);
   }
 
@@ -57,7 +63,7 @@ export function ProductPicture(props: ProductPictureProps) {
       <picture className="product__item-picture">
         <img
           data-src={props.product.desktop_url}
-          src={src}
+          src={src.current}
           alt={alt}
           ref={imgRef}
         />
