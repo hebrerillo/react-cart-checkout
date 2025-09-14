@@ -1,7 +1,7 @@
 import React from "react";
 import { Product } from "src/products-list/interface";
 import { ProductItem } from "src/products-list/product-item";
-import { HTTPRequest, RequestParams } from "src/utilities/request";
+import { HTTPRequest, RequestParams, MockRequest } from "src/utilities/request";
 import { GlobalContextManager } from "src/global/globalContext";
 import { ProductsObserver } from "src/products-list/products-observer";
 
@@ -36,17 +36,17 @@ export class ProductListManager {
   }
 
   /**
-   * Updates the intersection information of a product.
+   * Updates the intersection information of a product and updates the products list.
    *
-   * @param {string} productId The id of the product.
-   * @param {boolean} intersects Whether the product is intersecting in the view port.
+   * @param {string} productId
+   *                 The id of the product that is intersecting in the viewport.
    */
-  public updateProductIntersection(productId: string, intersects: boolean) {
+  public productIntersects(productId: string) {
     const product = this.productList?.find((productItem: Product) => {
       return productItem.id === productId;
     });
 
-    if (!product || !intersects) {
+    if (!product) {
       return;
     }
 
@@ -61,6 +61,12 @@ export class ProductListManager {
     this.productsObserver?.observeProductsElements(productsElement);
   }
 
+  /**
+   * Executes the updater function with the new products
+   *
+   * @param {Array<Product>} newList
+   *        The new products to add
+   */
   private updateProductList(newList: Array<Product>) {
     if (!this.updaterFunction) {
       return;
@@ -75,20 +81,45 @@ export class ProductListManager {
    * Performs an asynchronous request to fetch products
    */
   public async fetchProducts() {
-    let result = [] as Array<Product>;
-
-    const successFunc = (resultRequest: Array<Product>) => {
-      result = resultRequest;
-      this.updateProductList(result);
-    };
-
     const params: RequestParams = {
       url: "http://localhost:8082/carslist",
-      successFunc: successFunc,
+      successFunc: this.fetchProductsSuccessCallback.bind(this),
     };
 
+    params.mock = {} as MockRequest;
+    params.mock.timeout = 333;
+    params.mock.shouldFail = false;
+    params.mock.result = this.getMockResult();
+
     await HTTPRequest.performRequest(params);
-    return result;
+  }
+
+  /**
+   * @returns An array of mocking products.
+   */
+  private getMockResult(): Array<Product> {
+    let output = [];
+    for (let i = 0; i < 10; i++) {
+      const id = Math.floor(Math.random() * 100000);
+      let obj = {
+        id: `${id}`,
+        name: "renault",
+        mobile_url: "http://localhost/original.jpg?id=" + id + "&mobile",
+        desktop_url: "http://localhost/original.jpg?id=" + id + "&desktop",
+      } as Product;
+      output.push(obj);
+    }
+    return output;
+  }
+
+  /**
+   * Callback executed after a successful retrieval of products from the server.
+   *
+   * @param {Array<Product>}
+   *        The array of products retrieved from the server.
+   */
+  private fetchProductsSuccessCallback(resultRequest: Array<Product>) {
+    this.updateProductList(resultRequest);
   }
 
   /**
