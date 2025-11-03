@@ -5,4 +5,5 @@ export interface Product {
   name: string;
   intersects?: boolean;
   amount: number;
+  price: number;
 }

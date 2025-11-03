@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "src/layout/header";
-import Main from "src/layout/main";
+import Header from "src/layout/Header";
+import Main from "src/layout/Main";
 
 function Checkout() {
   return (

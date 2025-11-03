@@ -5,14 +5,14 @@ import { ProductPicture } from "./product-item-picture";
 
 export interface ProductItemProps {
   product: Product;
-  refCallback: any;
+  refCallback: React.LegacyRef<HTMLLIElement>;
 }
 
 export function ProductItem(props: ProductItemProps) {
-  const { cartContextManager } = useCartContext();
+  const { cartManager } = useCartContext();
 
-  const addProductToCart = cartContextManager.addProduct.bind(
-    cartContextManager,
+  const addProductToCart = cartManager.addProduct.bind(
+    cartManager,
     props.product,
   );
 
