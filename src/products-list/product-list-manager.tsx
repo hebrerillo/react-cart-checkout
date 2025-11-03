@@ -104,8 +104,8 @@ export class ProductListManager {
       let obj = {
         id: `${id}`,
         name: "renault",
-        mobile_url: "http://localhost/original.jpg?id=" + id + "&mobile",
-        desktop_url: "http://localhost/original.jpg?id=" + id + "&desktop",
+        mobile_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/2017_Renault_Megane_Dynamique_S_NAV_DC_1.5_Front.jpg/330px-2017_Renault_Megane_Dynamique_S_NAV_DC_1.5_Front.jpg?id=" + id + "&mobile",
+        desktop_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/2017_Renault_Megane_Dynamique_S_NAV_DC_1.5_Front.jpg/330px-2017_Renault_Megane_Dynamique_S_NAV_DC_1.5_Front.jpg?id=" + id + "&desktop",
       } as Product;
       output.push(obj);
     }
